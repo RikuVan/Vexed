@@ -1,0 +1,39 @@
+{
+  "extends": ["standard", "eslint-config-standard-react"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true
+  },
+  "plugins": [
+    "react",
+    "standard"
+  ],
+  "settings": {
+    "react": {
+      "createClass": "h", // Regex for Component Factory to use, default to "createReactClass"
+      "pragma": "h" // Pragma to use, default to "React"
+    }
+  },
+  "rules": {
+    "semi": ["error", "never"],
+    "jsx-quotes": [1, "prefer-single"],
+    "max-len": ["error", { "code": 110, "ignoreTrailingComments": true }],
+    "no-use-before-define": [2, "nofunc"],
+    "no-shadow": 0,
+    "prefer-const": 1,
+    "quote-props": [1, "consistent-as-needed"],
+    "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}],
+    "generator-star-spacing": 0,
+    "comma-dangle": 0,
+    "no-console": ["warn"],
+    "react/jsx-uses-react": [1],
+    "react/jsx-uses-vars": [2]
+  }
+}
