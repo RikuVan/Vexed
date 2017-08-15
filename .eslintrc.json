@@ -34,6 +34,8 @@
     "comma-dangle": 0,
     "no-console": ["warn"],
     "react/jsx-uses-react": [1],
-    "react/jsx-uses-vars": [2]
+    "react/jsx-uses-vars": [2],
+    "react/no-unknown-property": [0],
+    "react/prop-types": [0]
   }
 }

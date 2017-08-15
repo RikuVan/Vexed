@@ -1,13 +1,6 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background: url('../img/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #333;
-  font-family: 'Lato', sans-serif;
-  font-size: 16px;
-  margin: 0 15px;
-  padding: 0;
-}
+@import 'reset';
+@import 'variables';
+@import 'mixins';
+@import 'base';
+@import 'nav';
+@import 'buttons';

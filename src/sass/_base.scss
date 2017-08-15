@@ -1,0 +1,78 @@
+body {
+  background: url('../img/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0 15px;
+  padding: 0;
+  @include text-base()
+}
+
+.App {
+  margin: 0 auto;
+  max-width: 960px;
+  min-height: 200px;
+}
+
+.App-header {
+  padding: 3em 0;
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h1, h4 {
+  font-family: 'Carrois Gothic SC', sans-serif;
+  margin: 0;
+}
+
+main {
+  @include flex(column, wrap, space-around, center);
+  background-color: #fff;
+  border-radius: 2px;
+  margin-bottom: 5em;
+  padding-bottom: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-countdown-timer {
+  width: 2em;
+  height: 2em;
+  background: red;
+  color: white;
+}
+
+.fa.fa-flag-o {
+  font-size: 40px;
+}
+
+.messages,
+.controls,
+.options {
+  padding-top: 3.5em;
+}
+
+.messages-text {
+  font-size: 1.5em;
+}
+
+.options {
+  width: 100%;
+  @include flex(row, wrap, center, stretch)
+}
+
+.flag {
+  min-height: 100px;
+  padding-top: 3em;
+
+  > .fa.fa-flag-o {
+    font-size: 50px;
+  }
+}
+

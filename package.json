@@ -14,7 +14,10 @@
     "start": "npm run clean && npm run webpack:dev"
   },
   "dependencies": {
-    "hyperapp": "^0.11.0"
+    "firebase": "^4.2.0",
+    "hyperapp": "^0.11.0",
+    "ramda": "^0.24.1",
+    "seamless-immutable": "^7.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -41,6 +44,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
+    "hyperapp-redux-devtools": "^1.0.5",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.0.2",
     "postcss-loader": "^2.0.6",

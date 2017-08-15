@@ -1,0 +1,13 @@
+@mixin flex($direction, $wrap, $justifyContent, $alignItems) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+}
+
+@mixin text-base() {
+  color: #333;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+}
