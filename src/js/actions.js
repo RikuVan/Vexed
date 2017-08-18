@@ -1,19 +1,13 @@
 import {
-  getImageUrl,
-} from './helpers/firebase'
-import {
-  merge,
-  head,
-  last
+  updateIsLoading,
+  Immutable
 } from './helpers/utils'
 
 export default {
-  loading: (s, a, d) => {
-    const key = head(d)
-    const value = last(d)
-    return {[key]: merge(s[key], {loading: value})}
-  },
-  getUrl: s => ({url: getImageUrl(s.code)}),
-  setAuth: (s, a, d) => ({auth: merge(s.auth, d)}),
-  onInput: (s, a, data) => (data)
+  setIsLoading: (s, a, d) => ({key: updateIsLoading(d)(s)}),
+  onInput: (s, a, data) => (data),
+  setRound: (s, a, d) => ({round: Immutable.merge(s.round, d)}),
+  startTimer: (s, a, d) => '',
+  haltTimer: (s, a, d) => '',
+  clearTimer: (s, a, d) => '',
 }

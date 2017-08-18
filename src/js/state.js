@@ -1,16 +1,17 @@
 import countries from '../json/countries'
-import {static as Immutable} from 'seamless-immutable'
+import {Immutable} from './helpers/utils'
 
 export default {
   auth: Immutable({
     user: null,
     error: null,
-    loading: false
+    isLoading: false
   }),
   countries: Immutable(countries),
-  count: 0,
-  flags: 0,
-  correct: 2,
-  code: 'fi',
-  url: ''
+  round: Immutable({
+    flagUrl: '',
+    choices: [],
+    answer: null,
+  }),
+  timers: Immutable({})
 }

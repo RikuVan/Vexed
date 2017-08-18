@@ -16,11 +16,11 @@ const Main = ({s, a}) =>
 
     <main>
       <div className='messages'>
-        <img src={s.url} />
+        <img src={s.round.flagUrl} />
       </div>
 
       <div className='flag'>
-        <pre>{JSON.stringify(s.auth, null, 2)}</pre>
+        <pre>{s.timers.test.seconds || 0}</pre>
       </div>
 
 

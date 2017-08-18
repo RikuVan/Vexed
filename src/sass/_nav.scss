@@ -15,11 +15,16 @@
 
 .user-info {
   display: flex;
-  padding: 5px 10px;
+  align-self: center;
+  padding: 0 40px 0 10px;
+  &:last-of-type {
+    padding: 0 10px 0 10px;
+  }
 }
 
 .user-info__detail {
   flex: 1;
+  align-self: center;
 }
 
 .user-info__detail-number {

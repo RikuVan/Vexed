@@ -3,7 +3,7 @@ import Loading from './Loading'
 import {getEventVal, pathOr} from '../helpers/utils'
 
 const LogInOutBtn = ({s, a}) => {
-  if (s.auth.loading) {
+  if (s.auth.isLoading) {
     return <Loading small />
   } else if (!s.auth.user) {
     return (

@@ -2,7 +2,7 @@ import {
   auth,
   googleAuthProvider
 } from '../helpers/firebase'
-import {pickUserData} from '../helpers/utils'
+import {pickUserData, Immutable} from '../helpers/utils'
 
 export default () => emit => ({
   events: {
@@ -11,32 +11,41 @@ export default () => emit => ({
         if (user) {
           const userData = pickUserData(user)
           a.setAuth({user: userData})
-          emit('notification', 'loggedIn')
+          emit('authChange', 'loggedIn')
         }
       })
     }
   },
   actions: {
-    async login(s, a, d) {
-      a.setAuth({loading: true})
+
+    setAuth({auth}, a, d) {
+      return {auth: Immutable.merge(auth, d)}
+    },
+
+    async login(s, {setAuth}) {
+      setAuth({isLoading: true})
+
       try {
         const {user} = await auth.signInWithPopup(googleAuthProvider)
         const userData = pickUserData(user)
-        a.setAuth({user: userData, loading: false})
-        emit('notification', 'loggedIn')
+
+        setAuth({user: userData, isLoading: false})
+        emit('authChange', 'loggedIn')
       } catch (error) {
-        a.setAuth({error, loading: false})
-        emit('notification', 'login failed')
+        setAuth({error, isLoading: false})
+        emit('authChange', 'loginFailed')
       }
     },
-    async logout(s, a) {
+
+    async logout(s, {setAuth}) {
       try {
         await auth.signOut()
-        a.setAuth({user: null, error: null, loading: false})
-        emit('notification', 'loggedOut')
+
+        setAuth({user: null, error: null, isLoading: false})
+        emit('authChange', 'loggedOut')
       } catch (error) {
         console.error('logout failed: ', error.message)
-        emit('notification', 'logout failed')
+        emit('authChange', 'logoutFailed')
       }
     },
   }
