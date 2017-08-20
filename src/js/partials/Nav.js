@@ -1,6 +1,7 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
 import Loading from './Loading'
 import {getEventVal, pathOr} from '../helpers/utils'
+import {getTotalTimeFromSeconds} from '../helpers/utils'
 
 const LogInOutBtn = ({s, a}) => {
   if (s.auth.isLoading) {
@@ -25,31 +26,6 @@ const LogInOutBtn = ({s, a}) => {
   )
 }
 
-const Login = ({s, a}) => {
-  return (
-    <form className='form'>
-      <input
-        className='login__input'
-        type='text'
-        name='username'
-        placeholder='Username'
-        required
-        oninput={e => a.onInput({username: getEventVal(e)})}
-      />
-      <input
-        className='login__input'
-        type='password'
-        name='password'
-        placeholder='Password'
-        required
-        oninput={e => a.onInput({password: getEventVal(e)})}
-      />
-    </form>
-  )
-}
-
-const Logout = () => <div>Logout</div>
-
 export default ({s, a}) => {
   return (
     <nav className='Nav'>
@@ -60,10 +36,16 @@ export default ({s, a}) => {
           </strong>
         </div>
         <div className='user-info__detail'>
-          Total flags: <span className='user-info__detail-number'>{s.flags}</span>
+          Total flags: <span className='user-info__detail-number'>{s.game.flagsPlayed}</span>
         </div>
         <div className='user-info__detail'>
-          Correct: <span className='user-info__detail-number'>{s.correct}</span>
+          Correct: <span className='user-info__detail-number'>{s.game.correct.length}</span>
+        </div>
+        <div className='user-info__detail'>
+          Total time:{' '}
+          <span className='user-info__detail-number'>
+            {getTotalTimeFromSeconds(s.game.totalTime)}
+          </span>
         </div>
         <div className='login'>
           <LogInOutBtn s={s} a={a} />

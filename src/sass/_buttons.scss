@@ -1,8 +1,8 @@
 .Button {
   background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid #aa8899;
+  border: 1px solid $color-nav-btn;
   border-radius: 3px;
-  color: #aa8899;
+  color: $color-nav-btn;
   font-size: 1rem;
   outline: none;
   padding: 10px 15px;
@@ -16,7 +16,7 @@
   }
 
   &:disabled {
-    opacity: 0.3;
+    opacity: 0.8;
   }
 
   &-white {
@@ -24,7 +24,7 @@
   }
 
   &-main {
-    background-color: #827C28;
+    background-color: $color-secondary;
     color: #fff;
     padding: 15px 20px;
 
