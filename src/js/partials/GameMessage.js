@@ -1,5 +1,6 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
 import {gameStates} from '../state'
+import {memoize} from '../helpers/utils'
 
 const messages = {
   expired: () => <span>Oops, time expired</span>,
@@ -13,6 +14,7 @@ const messages = {
       Good job! Answered in {time} {time === 1 ? 'second' : 'seconds'}
     </span>,
   failure: () => <span>Wrong answer. Keep studying!</span>,
+  next: () => <span>Ready for next one?</span>
 }
 
 const wrapMessage = message =>
@@ -27,8 +29,10 @@ export const renderCurrentMessage = (
   messages,
   wrapMessage
 ) => {
-  const {active, isCorrect, elapsedTime} = round
+  const {active, isCorrect, elapsedTime, isLoading} = round
   const {secondsRemaining} = timer
+
+  if (isLoading) return null
 
   const welcome = gameState === gameStates.UNINITIALIZED && !active
   const remaining = elapsedTime === null && active
@@ -43,7 +47,8 @@ export const renderCurrentMessage = (
   return wrapMessage(message)
 }
 
-export default ({timer, round, gameState}) =>
+export default memoize(({timer, round, gameState}) =>
   <div className="messages">
     {renderCurrentMessage(timer, round, gameState, messages, wrapMessage)}
   </div>
+)

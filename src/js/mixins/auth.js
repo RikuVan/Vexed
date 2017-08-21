@@ -11,13 +11,18 @@ export default () => emit => ({
         if (user) {
           const userData = pickUserData(user)
           a.setAuth({user: userData})
+          a.firebase.get(
+            {
+              resource: 'player',
+              uid: userData.uid
+            }
+          )
           emit('authChange', 'loggedIn')
         }
       })
     }
   },
   actions: {
-
     setAuth({auth}, a, d) {
       return {auth: Immutable.merge(auth, d)}
     },

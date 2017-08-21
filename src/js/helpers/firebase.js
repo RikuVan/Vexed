@@ -9,3 +9,5 @@ export const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 
 export const getImageUrl = id =>
   `https://storage.googleapis.com/vexed-509f8.appspot.com/flags/${id.toLowerCase()}.png`
+
+export default firebase

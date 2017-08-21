@@ -10,6 +10,7 @@ import __ from 'ramda/src/__'
 import gt from 'ramda/src/gt'
 import always from 'ramda/src/always'
 import modulo from 'ramda/src/modulo'
+import memoize from 'ramda/src/memoize'
 
 import {static as Immutable} from 'seamless-immutable'
 
@@ -103,4 +104,4 @@ export const getChoicesWith = (getChoicesFn, getAnswerFn) => (
 
 export const getChoices = getChoicesWith(getRandomCountry, getCorrectAnswer)
 
-export {Immutable, pathOr}
+export {Immutable, pathOr, memoize}

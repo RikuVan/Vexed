@@ -5,11 +5,13 @@ import {gameStates} from './state'
 const inc = x => x + 1
 
 export default {
-  setIsLoading: (s, a, d) => ({key: updateIsLoading(d)(s)}),
-  initializeRound: ({countries, game}, a, d) => update => {
+  setIsLoading: (state, a, data) => ({key: updateIsLoading(data)(state)}),
+
+  initializeRound: ({countries, game}, actions, d) => update => {
     const {choices, correctAnswer} = getChoices(countries)
     const flagUrl = getImageUrl(correctAnswer, game.correct)
-    a.updateRound({
+
+    actions.updateRound({
       choices,
       flagUrl,
       answer: correctAnswer,
@@ -19,23 +21,27 @@ export default {
       isLoading: true,
       error: null
     })
+
     if (game.status !== gameStates.IN_PROGRESS) {
-      a.updateGame({state: gameStates.IN_PROGRESS})
+      actions.updateGame({state: gameStates.IN_PROGRESS})
     }
-    a.timer.delay({
-      seconds: 0.3,
-      action: () => a.timer.count({seconds: game.level, name: 'game'}),
-      name: 'gameTimerDelay'
-    })
+
+    actions.timer.count({seconds: game.level, name: 'game'})
   },
-  updateRound: ({round}, a, d) => update => update({round: Immutable.merge(round, d)}),
-  updateGame: ({game}, a, d) => ({game: Immutable.merge(game, d)}),
-  handleChoice: ({round, game, timers}, a, {choice}) => {
-    a.timer.halt({name: 'game'})
+
+  updateRound: ({round}, a, data) => update =>
+    update({round: Immutable.merge(round, data)}),
+
+  updateGame: ({game}, a, data) => ({game: Immutable.merge(game, data)}),
+
+  handleChoice: ({round, game, timers}, actions, {choice}) => {
+    actions.timer.halt({name: 'game'})
+
     const isCorrect =
       choice === round.answer && timers.game.secondsRemaining > 0
     const correct = isCorrect ? game.correct.concat([choice]) : game.correct
-    a.updateRound({isCorrect, active: false})
-    a.updateGame({flagsPlayed: inc(game.flagsPlayed), correct})
+
+    actions.updateRound({isCorrect, active: false})
+    actions.updateGame({flagsPlayed: inc(game.flagsPlayed), correct})
   },
 }

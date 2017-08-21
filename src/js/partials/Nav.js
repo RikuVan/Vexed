@@ -1,6 +1,6 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
 import Loading from './Loading'
-import {getEventVal, pathOr} from '../helpers/utils'
+import {pathOr} from '../helpers/utils'
 import {getTotalTimeFromSeconds} from '../helpers/utils'
 
 const LogInOutBtn = ({s, a}) => {
