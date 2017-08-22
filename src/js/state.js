@@ -14,7 +14,15 @@ export const gameStates = {
   FINISHED: 'finished'
 }
 
+export const persistenceTypes = {
+  LOCAL: 'local',
+  FIREBASE: 'firebase'
+}
+
 export default {
+  persistence: Immutable({
+    type: 'local'
+  }),
   auth: Immutable({
     user: null,
     error: null,

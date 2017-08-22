@@ -5,6 +5,7 @@
   border-top-right-radius: 5px;
   @include flex(row, wrap, flex-start, center);
   padding: 15px;
+  min-height: 50px;
 }
 
 .Nav-item {

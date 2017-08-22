@@ -7,15 +7,15 @@ const Flag = ({round, updateRound}) => {
     <div>
       {round.isLoading && !round.error && <Loading small={false} />}
       {round.error &&
-        <div className="image-error">
+        <div className='image-error'>
           Oops, that image is broken :(, try again.
         </div>}
       <img
         style={imageStyle}
-        className="animated fadeIn"
+        className='animated fadeIn'
         src={round.flagUrl}
-        width="250"
-        alt="logo"
+        width='250'
+        alt='logo'
         onload={() => updateRound({isLoading: false, active: true})}
         onerror={error => updateRound({error})}
       />

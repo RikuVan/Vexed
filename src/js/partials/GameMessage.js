@@ -48,7 +48,7 @@ export const renderCurrentMessage = (
 }
 
 export default memoize(({timer, round, gameState}) =>
-  <div className="messages">
+  <div className='messages'>
     {renderCurrentMessage(timer, round, gameState, messages, wrapMessage)}
   </div>
 )

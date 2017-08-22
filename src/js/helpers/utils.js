@@ -29,30 +29,20 @@ export const getTotalTimeFromSeconds = totalSeconds => {
   const hours = compose(
     ifElse(
       gt(__, 0),
-      v => `${v} h `,
+      v => `${v}h `,
       always('')
     ),
     floor,
     divide(__, 3600)
   )(totalSeconds)
-
   const minutes = compose(
-    ifElse(
-      gt(__, 0),
-      v => `${v} m `,
-      always('')
-    ),
+    v => `${v}m `,
     floor,
     divide(__, 60),
     modulo(__, 3600)
   )(totalSeconds)
-
   const seconds = compose(
-    ifElse(
-      gt(__, 9),
-      v => `${v} s`,
-      v => `0${v} s`
-    ),
+    v => `${v}s`,
     modulo(__, 60),
     modulo(__, 3600)
   )(totalSeconds)

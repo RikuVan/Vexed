@@ -3,7 +3,7 @@ import Nav from '../partials/Nav'
 import GameMessage from '../partials/GameMessage'
 import Choices from '../partials/Choices'
 import Flag from '../partials/Flag'
-import Loading from '../partials/Loading'
+//import Data from '../partials/Data'
 
 const getHourglass = seconds => {
   if (seconds >= 7) {
@@ -14,37 +14,17 @@ const getHourglass = seconds => {
   return 'end'
 }
 
-const renderFlagImage = (round, updateRound) => {
-  const imageStyle = round.isLoading || round.error ? {display: 'none'} : {}
-  return (
-    <div>
-      {round.isLoading && !round.error && <Loading small={false} />}
-      {round.error &&
-        <div className="image-error">
-          Oops, that image is broken :(, try again.
-        </div>}
-      <img
-        style={imageStyle}
-        className="animated fadeIn"
-        src={round.flagUrl}
-        width="250"
-        alt="logo"
-        onload={() => updateRound({isLoading: false, active: true})}
-        onerror={error => updateRound({error})}
-      />
-    </div>
-  )
-}
-
 const Main = ({s, a}) =>
-  <div className="App">
-    <div className="App-header">
-      <i className="fa fa-flag-o" aria-hidden="true" />
+  <div className='App'>
+    <div className='App-header'>
+      <i className='fa fa-flag-o' aria-hidden='true' />
       <h1>Vexed</h1>
       <h4>A game to improve your vexillogical knowledge</h4>
     </div>
 
     <Nav s={s} a={a} />
+
+    {/* <Data flags={s.game.flagsPlayed} correct={s.game.correct.length} /> */}
 
     <main>
       <GameMessage
@@ -53,13 +33,13 @@ const Main = ({s, a}) =>
         gameState={s.game.state}
       />
 
-      <div className="flag">
+      <div className='flag'>
         {s.round.flagUrl
           ? <Flag round={s.round} updateRound={a.updateRound} />
-          : <i className="fa fa-flag-o" aria-hidden="true" />}
+          : <i className='fa fa-flag-o' aria-hidden='true' />}
       </div>
 
-      <div className="options">
+      <div className='options'>
         <Choices
           choices={s.round.choices}
           handleChoice={a.handleChoice}
@@ -68,7 +48,7 @@ const Main = ({s, a}) =>
         />
       </div>
 
-      <div className="controls">
+      <div className='controls'>
         <button
           className={`Button Button-main ${s.timers.game.secondsRemaining > 0 &&
           s.round.active
@@ -82,9 +62,9 @@ const Main = ({s, a}) =>
               className={`fa fa-hourglass-${getHourglass(
                 s.timers.game.secondsRemaining
               )}`}
-              aria-hidden="true"
+              aria-hidden='true'
             />{' '}
-            {!s.round.active ? "I'm ready to play" : '...waiting'}
+            {!s.round.active ? 'I\'m ready to play' : '...waiting'}
           </span>
         </button>
       </div>

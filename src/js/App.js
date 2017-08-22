@@ -9,17 +9,15 @@ import firebaseDb from './mixins/firebaseDb'
 import '../sass/main.scss'
 import devtools from 'hyperapp-redux-devtools'
 
-const mixins = [
-  auth(),
-  timer(),
-  firebaseDb(),
-  process.env.NODE_ENV === 'development' && devtools()
-].filter(m => m)
-
 app({
   state,
   view: main,
   actions,
   events,
-  mixins
+  mixins: [
+    auth(),
+    timer(),
+    firebaseDb(),
+    devtools()
+  ]
 })

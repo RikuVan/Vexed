@@ -10,17 +10,11 @@ export default () => emit => ({
       auth.onAuthStateChanged(user => {
         if (user) {
           const userData = pickUserData(user)
-          a.setAuth({user: userData})
-          a.firebase.get(
-            {
-              resource: 'player',
-              uid: userData.uid
-            }
-          )
-          emit('authChange', 'loggedIn')
+
+          emit('auth:change', {state: 'loggedIn', user: userData})
         }
       })
-    }
+    },
   },
   actions: {
     setAuth({auth}, a, d) {
@@ -28,17 +22,15 @@ export default () => emit => ({
     },
 
     async login(s, {setAuth}) {
-      setAuth({isLoading: true})
+      emit('auth:change', {state: 'attemptLogin'})
 
       try {
         const {user} = await auth.signInWithPopup(googleAuthProvider)
         const userData = pickUserData(user)
 
-        setAuth({user: userData, isLoading: false})
-        emit('authChange', 'loggedIn')
+        emit('auth:change', {state: 'loggedIn', user: userData})
       } catch (error) {
-        setAuth({error, isLoading: false})
-        emit('authChange', 'loginFailed')
+        emit('auth:change', {state: 'loginFailed'})
       }
     },
 
@@ -46,11 +38,10 @@ export default () => emit => ({
       try {
         await auth.signOut()
 
-        setAuth({user: null, error: null, isLoading: false})
-        emit('authChange', 'loggedOut')
+        emit('auth:change', {state: 'loggedOut'})
       } catch (error) {
         console.error('logout failed: ', error.message)
-        emit('authChange', 'logoutFailed')
+        emit('auth:change', {state: 'logoutFailed'})
       }
     },
   }

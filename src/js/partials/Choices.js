@@ -1,7 +1,6 @@
 import {h} from 'hyperapp'
 import cx from 'classnames'
 
-
 const Choices = ({choices, selected, handleChoice, active}) => {
   return (
     <div className='Choices-wrapper'>
@@ -16,9 +15,9 @@ const Choices = ({choices, selected, handleChoice, active}) => {
                   'Choice',
                   {
                     'Choice--selected': isCurrent,
-                    disabled: !active
+                    'disabled': !active
                   })
-               }
+                }
               >
                 <input
                   className='Choice-radio'
