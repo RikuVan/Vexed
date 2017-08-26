@@ -29,6 +29,7 @@ const createPlugins = () =>
   filterFalsy([
     PRODUCTION &&
       new webpack.optimize.UglifyJsPlugin({
+        ecma: 8,
         compress: {
           warnings: false,
           drop_console: false,

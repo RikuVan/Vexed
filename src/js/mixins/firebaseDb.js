@@ -1,4 +1,5 @@
 import {db} from '../helpers/firebase'
+import {Immutable} from '../helpers/utils'
 
 const api = {
   players: () => db.ref('V0/players'),
@@ -10,16 +11,17 @@ const api = {
 const cb = snapshot => snapshot.val()
 
 const dbFn = operation => async ({resource, uid, payload}, emit) => {
-  // firebase.database.ref('player').once('value')
   let query = []
+
   if (operation !== 'remove') {
     query = payload ? [payload] : ['value', cb]
   }
   const dbRef = api[resource]({uid})
+
   try {
     return await dbRef[operation](...query)
   } catch (error) {
-    console.log(error)
+    console.log(error) // eslint-disabled-line no-console
   }
 }
 
@@ -34,12 +36,16 @@ const stream = ({resource, uid, event, emit}) => {
 }
 
 export default () => emit => ({
-  events: {},
   actions: {
     firebase: {
-      get: (s, a, {resource, uid, action}) => async update => {
+      get: (s, a, {resource, uid, decorate}) => async update => {
         const data = await get({resource, uid})
-        update({data})
+        if (data) {
+          const decoratedData = decorate ? decorate(data.val()) : data.val()
+          const newData = Immutable.merge(s[resource], decoratedData)
+
+          update({[resource]: newData})
+        }
       },
 
       set: (s, a, {resource, uid, payload}) =>

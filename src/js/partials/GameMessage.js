@@ -29,21 +29,23 @@ export const renderCurrentMessage = (
   messages,
   wrapMessage
 ) => {
-  const {active, isCorrect, elapsedTime, isLoading} = round
+  const {active, isCorrect, elapsedTime, isLoading, expired: roundExpired} = round
   const {secondsRemaining} = timer
 
   if (isLoading) return null
 
-  const welcome = gameState === gameStates.UNINITIALIZED && !active
-  const remaining = elapsedTime === null && active
+  const welcome = gameState !== gameStates.IN_PROGRESS && !active
+  const remaining = active && isCorrect === null
   const success = elapsedTime > 0 && isCorrect
   const failure = elapsedTime > 0 && isCorrect === false
+  const expired = roundExpired === true
 
-  let message = messages.expired()
+  let message = messages.next()
   if (welcome) message = messages.welcome()
   else if (remaining) message = messages.remaining(secondsRemaining)
   else if (success) message = messages.success(secondsRemaining)
   else if (failure) message = messages.failure()
+  else if (expired) message = message.expired()
   return wrapMessage(message)
 }
 

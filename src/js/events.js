@@ -1,26 +1,31 @@
+import {Immutable} from './helpers/utils'
+import {gameStates} from './state'
 
 export default {
-  'timer:expired': (s, {updateRound}, d) => updateRound({active: false}),
+  'timer:expired': (s, {updateRound, timer}, d) => {
+    timer.delay({seconds: 1.3, name: 'round-over', action: () => updateRound({active: false})})
+  },
 
-  'auth:change': (s, {setAuth, persistTo, firebase}, d) => {
+  'auth:change': (s, {setAuth, persistTo, firebase, store}, {user, error, state}) => {
+    const addState = data => Immutable.set(data, 'state', gameStates.INITIALIZED)
+
     const handleData = () => {
-      setAuth({isLoading: false, user: d.user})
+      setAuth({isLoading: false, user})
       persistTo({type: 'firebase'})
-      firebase.stream({resource: 'game', uid: d.user.uid, event: 'game:update'})
+      firebase.get({resource: 'game', uid: user.uid, decorate: addState})
+      store.remove()
     }
-    switch (d.state) {
+
+    switch (state) {
       case ('attemptLogin'):
         return setAuth({isLoading: true})
       case ('loggedIn'): return handleData()
       case ('loginFailed'):
-        return setAuth({error: d.error})
+        return setAuth({error})
       case ('logoutFailed'):
-        return setAuth({error: d.error})
+        return setAuth({error})
       default:
         return setAuth({user: null, error: null, isLoading: false})
     }
-  },
-  'game:update': (s, a, d) => {
-    console.log(d)
   }
 }

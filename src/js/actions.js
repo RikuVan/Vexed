@@ -19,7 +19,8 @@ export default {
       isCorrect: null,
       elapsedTime: null,
       isLoading: true,
-      error: null
+      error: null,
+      expired: null,
     })
 
     if (game.status !== gameStates.IN_PROGRESS) {
@@ -41,21 +42,27 @@ export default {
       choice === round.answer && timers.game.secondsRemaining > 0
     const correct = isCorrect ? game.correct.concat([choice]) : game.correct
 
-    if (auth.user === null) {
+    if (auth.user !== null) {
       await actions.firebase.update({
         resource: 'game',
         uid: auth.user.uid,
         payload: {
           flagsPlayed: inc(game.flagsPlayed),
-          correctChoices: correct.length,
-          totalTime: game.totalTime
-        }
+          correct,
+          totalTime: game.totalTime,
+        },
       })
+    } else {
+      actions.store.save()
     }
 
-    actions.updateRound({isCorrect, active: false})
+    actions.updateRound({isCorrect, active: false, expired: false})
     actions.updateGame({flagsPlayed: inc(game.flagsPlayed), correct})
   },
 
-  persistTo: (s, a, {type}) => ({persistance: {type}})
+  persistTo: (s, a, {type}) => ({persistence: {type}}),
+
+  changeLevel: (s, a, {level}) => ({
+    game: Immutable.set(s.game, 'level', level),
+  }),
 }

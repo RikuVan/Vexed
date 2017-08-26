@@ -40,7 +40,7 @@ export default () => emit => ({
 
         emit('auth:change', {state: 'loggedOut'})
       } catch (error) {
-        console.error('logout failed: ', error.message)
+        console.error('logout failed: ', error.message) // eslint-disable-line no-console
         emit('auth:change', {state: 'logoutFailed'})
       }
     },

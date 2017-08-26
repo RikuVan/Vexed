@@ -2,26 +2,27 @@ import countries from '../json/countries'
 import {Immutable} from './helpers/utils'
 
 export const levels = {
-  EASY: 10,
-  MEDIUM: 5,
   HARD: 3,
+  MEDIUM: 5,
+  EASY: 10
 }
 
 export const gameStates = {
   UNINITIALIZED: 'uninitialized',
+  INITIALIZED: 'initialized',
   STARTED: 'started',
   IN_PROGRESS: 'in_progress',
   FINISHED: 'finished'
 }
 
-export const persistenceTypes = {
+export const storageTypes = {
   LOCAL: 'local',
   FIREBASE: 'firebase'
 }
 
 export default {
   persistence: Immutable({
-    type: 'local'
+    type: storageTypes.LOCAL
   }),
   auth: Immutable({
     user: null,
@@ -38,7 +39,8 @@ export default {
     elapsedTime: null,
     selected: null,
     isLoading: false,
-    error: null
+    error: null,
+    expired: null
   }),
   game: Immutable({
     state: gameStates.UNINITIALIZED,
@@ -46,7 +48,7 @@ export default {
     flagsPlayed: 0,
     level: levels.EASY,
     rating: 0,
-    totalTime: 1000
+    totalTime: 0
   }),
   timers: Immutable({
     game: {timerId: null, secondsRemaining: null}

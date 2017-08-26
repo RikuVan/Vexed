@@ -3,30 +3,24 @@ import Nav from '../partials/Nav'
 import GameMessage from '../partials/GameMessage'
 import Choices from '../partials/Choices'
 import Flag from '../partials/Flag'
-//import Data from '../partials/Data'
-
-const getHourglass = seconds => {
-  if (seconds >= 7) {
-    return 'start'
-  } else if (seconds >= 4) {
-    return 'half'
-  }
-  return 'end'
-}
+import GameButton from '../partials/GameButton'
+import {levels} from '../state'
+import cx from 'classnames'
 
 const Main = ({s, a}) =>
   <div className='App'>
-    <div className='App-header'>
+    <header className='App-header'>
       <i className='fa fa-flag-o' aria-hidden='true' />
       <h1>Vexed</h1>
       <h4>A game to improve your vexillogical knowledge</h4>
-    </div>
+    </header>
 
     <Nav s={s} a={a} />
 
     {/* <Data flags={s.game.flagsPlayed} correct={s.game.correct.length} /> */}
 
     <main>
+
       <GameMessage
         timer={s.timers.game}
         round={s.round}
@@ -49,24 +43,22 @@ const Main = ({s, a}) =>
       </div>
 
       <div className='controls'>
-        <button
-          className={`Button Button-main ${s.timers.game.secondsRemaining > 0 &&
-          s.round.active
-            ? 'active'
-            : ''}`}
-          onclick={a.initializeRound}
-          disabled={s.round.active}
-        >
-          <span>
-            <icon
-              className={`fa fa-hourglass-${getHourglass(
-                s.timers.game.secondsRemaining
-              )}`}
-              aria-hidden='true'
-            />{' '}
-            {!s.round.active ? 'I\'m ready to play' : '...waiting'}
-          </span>
-        </button>
+        <GameButton
+          gameTimer={s.timers.game}
+          round={s.round}
+          onClick={a.initializeRound}
+        />
+      </div>
+
+      <div className='levels'>
+        <div className='level-dots'>
+          {Object.entries(levels).map((level, i) =>
+            <div
+              className={cx('dot', `dot-${i}`, {active: s.game.level === level[1]})}
+              onclick={() => a.changeLevel({level: level[1]})}
+            />
+          )}
+        </div>
       </div>
     </main>
   </div>

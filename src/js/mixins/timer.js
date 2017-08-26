@@ -15,9 +15,9 @@ const tick = (s, action = () => {}, name, emit) => {
   const intervalId = setInterval(() => {
     if (--time < 0) {
       clearInterval(intervalId)
-      emit('timeExpired')
+      emit('timer:expired')
     } else {
-      action({name})
+      return action({name})
     }
   }, 1000)
 
@@ -54,8 +54,9 @@ export default () => emit => ({
         const secondsRemaining = timers[name].secondsRemaining
         const secondsElapsed = game.level - secondsRemaining
         const totalTime = game.totalTime + secondsElapsed
+        const expired = timers[name].secondsRemaining === 0
         return {
-          round: Immutable.set(round, 'elapsedTime', secondsElapsed),
+          round: Immutable.merge(round, {elapsedTime: secondsElapsed, expired}),
           game: Immutable.set(game, 'totalTime', totalTime)
         }
       },

@@ -55,7 +55,13 @@ main {
 .messages,
 .controls,
 .options {
-  padding-top: 3.5em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.controls {
+  padding-top: 2.5em;
+  padding-bottom: 1.5em;
 }
 
 .messages-text {
@@ -70,12 +76,18 @@ main {
 }
 
 .flag {
-  min-height: 100px;
-  padding-top: 3em;
+  min-height: 50%;
+  padding-top: 1em;
+  padding-bottom: 2em;
 
   > .fa.fa-flag-o {
+    padding-top: 50px;
     font-size: 50px;
   }
+}
+
+.image-error {
+  font-size: 20px;
 }
 
 

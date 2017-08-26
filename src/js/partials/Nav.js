@@ -11,7 +11,7 @@ const LogInOutBtn = ({s, a}) => {
         className='Button Button-white block'
         onclick={a.login}
       >
-        <i className='fa fa-sign-in' /> Sign in
+        <i className='fa fa-sign-in' /> Sign in with Google
       </button>
     )
   }
