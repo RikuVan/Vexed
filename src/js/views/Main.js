@@ -39,6 +39,7 @@ const Main = ({s, a}) =>
           handleChoice={a.handleChoice}
           selected={s.round.select}
           active={s.round.active}
+          loading={s.round.isLoading}
         />
       </div>
 

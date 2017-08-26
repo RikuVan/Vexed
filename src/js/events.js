@@ -2,12 +2,21 @@ import {Immutable} from './helpers/utils'
 import {gameStates} from './state'
 
 export default {
-  'timer:expired': (s, {updateRound, timer}, d) => {
-    timer.delay({seconds: 1.3, name: 'round-over', action: () => updateRound({active: false})})
+  'timer:expired': (s, {handleChoice, timer}, d) => {
+    timer.delay({
+      seconds: 1.3,
+      name: 'round-over',
+      action: () => handleChoice({answer: ''}),
+    })
   },
 
-  'auth:change': (s, {setAuth, persistTo, firebase, store}, {user, error, state}) => {
-    const addState = data => Immutable.set(data, 'state', gameStates.INITIALIZED)
+  'auth:change': (
+    s,
+    {setAuth, persistTo, firebase, store},
+    {user, error, state}
+  ) => {
+    const addState = data =>
+      Immutable.set(data, 'state', gameStates.INITIALIZED)
 
     const handleData = () => {
       setAuth({isLoading: false, user})
@@ -17,15 +26,16 @@ export default {
     }
 
     switch (state) {
-      case ('attemptLogin'):
+      case 'attemptLogin':
         return setAuth({isLoading: true})
-      case ('loggedIn'): return handleData()
-      case ('loginFailed'):
+      case 'loggedIn':
+        return handleData()
+      case 'loginFailed':
         return setAuth({error})
-      case ('logoutFailed'):
+      case 'logoutFailed':
         return setAuth({error})
       default:
         return setAuth({user: null, error: null, isLoading: false})
     }
-  }
+  },
 }

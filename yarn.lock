@@ -789,14 +789,6 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-polyfill@^6.23.0:
-  version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
-  dependencies:
-    babel-runtime "^6.22.0"
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
-
 babel-polyfill@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
@@ -3187,9 +3179,9 @@ hyperapp-redux-devtools@^1.0.5:
     redux "^3.7.1"
     redux-devtools-extension "^2.13.2"
 
-hyperapp@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/hyperapp/-/hyperapp-0.11.0.tgz#80b8af17aa50fd1908e8a8091711a23b1193fe3d"
+hyperapp@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/hyperapp/-/hyperapp-0.12.0.tgz#224c98dfb9bd8fbe6a79ac2d9e6f267a6df8677a"
 
 iconv-lite@0.4, iconv-lite@^0.4.17:
   version "0.4.18"
@@ -6137,6 +6129,33 @@ topo@1.x.x:
   resolved "https://registry.yarnpkg.com/topo/-/topo-1.1.0.tgz#e9d751615d1bb87dc865db182fa1ca0a5ef536d5"
   dependencies:
     hoek "2.x.x"
+
+topojson-client@3, topojson-client@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-client/-/topojson-client-3.0.0.tgz#1f99293a77ef42a448d032a81aa982b73f360d2f"
+  dependencies:
+    commander "2"
+
+topojson-server@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-server/-/topojson-server-3.0.0.tgz#378e78e87c3972a7b5be2c5d604369b6bae69c5e"
+  dependencies:
+    commander "2"
+
+topojson-simplify@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson-simplify/-/topojson-simplify-3.0.0.tgz#58527d26ca85bd8589b5800f6c10e93885245ae5"
+  dependencies:
+    commander "2"
+    topojson-client "3"
+
+topojson@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/topojson/-/topojson-3.0.0.tgz#c2aca1b76435e801dce3f229586bbd5767115ce3"
+  dependencies:
+    topojson-client "3.0.0"
+    topojson-server "3.0.0"
+    topojson-simplify "3.0.0"
 
 toposort@^1.0.0:
   version "1.0.3"

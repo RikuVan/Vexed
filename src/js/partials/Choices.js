@@ -1,7 +1,8 @@
 import {h} from 'hyperapp'
 import cx from 'classnames'
 
-const Choices = ({choices, selected, handleChoice, active}) => {
+const Choices = ({choices, selected, handleChoice, active, loading}) => {
+  if (loading) return null
   return (
     <div className='Choices-wrapper'>
       {choices.map((country, key) => {

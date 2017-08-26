@@ -53,14 +53,16 @@ main {
 }
 
 .messages,
-.controls,
 .options {
   padding-top: 2em;
+  display: flex;
+}
+
+.message {
   padding-bottom: 2em;
 }
 
 .controls {
-  padding-top: 2.5em;
   padding-bottom: 1.5em;
 }
 

@@ -14,7 +14,7 @@ const getAndParse = () => {
       return null
     }
   } catch (error) {
-    console.error('Error retrieving data from locale storage', error) // eslint-disabled-line no-console
+    console.error('Error retrieving data from locale storage', error) // eslint-disable-line no-console
   }
 }
 

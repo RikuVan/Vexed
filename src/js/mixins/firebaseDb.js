@@ -21,7 +21,7 @@ const dbFn = operation => async ({resource, uid, payload}, emit) => {
   try {
     return await dbRef[operation](...query)
   } catch (error) {
-    console.log(error) // eslint-disabled-line no-console
+    console.log(error) // eslint-disable-line no-console
   }
 }
 

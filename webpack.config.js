@@ -37,7 +37,7 @@ const createPlugins = () =>
         mangle: {
           screw_ie8: true,
         },
-        sourceMap: false,
+        sourceMap: true,
       }),
 
     new HtmlWebpackPlugin({
@@ -99,6 +99,12 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          query: {
+            presets: [
+              'env',
+            ],
+            plugins: ['transform-object-rest-spread'],
+          },
         },
       },
       {
