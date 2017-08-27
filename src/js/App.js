@@ -6,9 +6,11 @@ import main from './views/Main'
 import auth from './mixins/auth'
 import store from './mixins/localStorage'
 import timer from './mixins/timer'
+//import notifier from './mixins/notifier'
 import firebaseDb from './mixins/firebaseDb'
 import '../sass/main.scss'
-import devtools from 'hyperapp-redux-devtools'
+//import devtools from 'hyperapp-redux-devtools'
+//import partial from 'hyperapp-partial'
 
 app({
   state,
@@ -20,6 +22,8 @@ app({
     timer(),
     firebaseDb(),
     store({key: 'game', updateAction: 'updateGame'}),
-    devtools()
-  ]
+    //partial,
+    //notifier([{name: 'auth', type: 'success'}]),
+    //devtools(),
+  ],
 })

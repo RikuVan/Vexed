@@ -4,7 +4,7 @@ import cx from 'classnames'
 const Choices = ({choices, selected, handleChoice, active, loading}) => {
   if (loading) return null
   return (
-    <div className='Choices-wrapper'>
+    <div className={cx('Choices-wrapper', {inactive: !choices})}>
       {choices.map((country, key) => {
         const code = Object.keys(country)[0]
         const isCurrent = selected === code

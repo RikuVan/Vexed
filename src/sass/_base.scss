@@ -7,15 +7,20 @@ body {
 }
 
 .App {
-  margin: 0 auto;
+  margin: auto;
+  padding-top: -200px;
   max-width: 960px;
   min-height: 200px;
 }
 
 .App-header {
-  padding: 3em 0;
+  padding: 1em 0 6em;
   text-align: center;
   color: white;
+
+  h1 {
+    padding: 5px;
+  }
 }
 
 h1 {
@@ -44,7 +49,6 @@ main {
 .App-countdown-timer {
   width: 2em;
   height: 2em;
-  background: red;
   color: white;
 }
 
@@ -69,7 +73,7 @@ main {
 .messages-text {
   font-size: 1.5em;
   font-weight: 700;
-  padding-bottom: 5px;
+  padding: 15px;
 }
 
 .options {
@@ -90,6 +94,16 @@ main {
 
 .image-error {
   font-size: 20px;
+}
+
+footer {
+  @include flex(row, wrap, center, top);
+  color: white;
+  font-size: small;
+  a {
+    margin-bottom: 30px;
+    color: white;
+  }
 }
 
 

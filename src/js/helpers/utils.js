@@ -83,7 +83,14 @@ export const getChoicesWith = (getChoicesFn, getAnswerFn) => (
   const choices = []
   do {
     const {code, choice} = getChoicesFn(countries)
-    if (selected.indexOf(code) === -1) {
+    const ignore = []
+    // 253 flasgs total, so at 250 restart
+    if (selected.length <= 250) {
+      ignore.concat(selected)
+    } else if (selected <= 500) {
+      ignore.concat(selected.slice(250))
+    }
+    if (ignore.indexOf(code) === -1) {
       --numberOfChoices
       choices.push(choice)
       selected.push(code)

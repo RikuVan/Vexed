@@ -52,6 +52,10 @@ const createPlugins = () =>
       {
         from: path.join(ROOT_PATH, './src/favicon.ico'),
         to: path.join(ROOT_PATH, './public'),
+      },
+      {
+        from: path.join(ROOT_PATH, './maps/countries/topo-countries.json'),
+        to: path.join(ROOT_PATH, './public'),
       }
     ]),
 
