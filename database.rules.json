@@ -1,6 +1,14 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "V0": {
+      "players": {
+        "$uid": {
+          "game": {
+            ".write": "auth !== null && auth.provider === 'google' && $uid === auth.uid",
+            ".read": "auth !== null && auth.provider === 'google' && $uid === auth.uid"
+          }
+        }
+      }
+    }
   }
 }
