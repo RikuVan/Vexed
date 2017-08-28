@@ -3172,6 +3172,10 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+hyperapp-partial@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/hyperapp-partial/-/hyperapp-partial-0.2.0.tgz#c809d6fb9fc4ab6240e3cd4aed3530a0e8cee1b8"
+
 hyperapp-redux-devtools@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/hyperapp-redux-devtools/-/hyperapp-redux-devtools-1.0.5.tgz#b88157df9d711251cdf132642e865e9df76f8a9f"

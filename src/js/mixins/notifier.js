@@ -1,7 +1,7 @@
-//import partial from 'hyperapp-partial'
+import partial from 'hyperapp-partial'
 import {h} from 'hyperapp'
 import {Immutable} from '../helpers/utils'
-/*
+
 export default config => partial.mixin('Notifier', emit => ({
   state: {
     notes: {},
@@ -28,4 +28,3 @@ export default config => partial.mixin('Notifier', emit => ({
     }
   }
 }))
-*/

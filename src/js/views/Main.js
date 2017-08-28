@@ -6,13 +6,13 @@ import Flag from '../partials/Flag'
 import GameButton from '../partials/GameButton'
 import {levels} from '../state'
 import cx from 'classnames'
-import MapBackground from '../partials/MapBackground'
+import Map from '../partials/Map'
 
 const Main = ({s, a, Notifier}) =>
   <div className='app-wrapper'>
     <div className='App'>
 
-      <MapBackground correct={s.game.correct} />
+      <Map correct={s.game.correct} />
 
       <header className='App-header'>
         <i className='fa fa-flag-o' aria-hidden='true' />
