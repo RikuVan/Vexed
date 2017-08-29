@@ -11,7 +11,6 @@ const colors = {
 }
 
 const init = (data, correct) => {
-
   const numbers = {
     MAP_CENTER: [0, 85],
     MAP_WIDTH: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
@@ -55,7 +54,7 @@ const init = (data, correct) => {
     .attr('class', 'country')
     .attr('d', path)
     .attr('fill', d => {
-      if (correct.indexOf(d.properties.iso_a2) === correct.length - 1) return colors.LAST_SELECTED
+      // if (correct.indexOf(d.properties.iso_a2) === correct.length - 1) return colors.LAST_SELECTED
       if (correct.indexOf(d.properties.iso_a2) > -1) return colors.SELECTED
       return colors.NONE
     })

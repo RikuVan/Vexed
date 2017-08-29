@@ -3176,9 +3176,9 @@ hyperapp-partial@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/hyperapp-partial/-/hyperapp-partial-0.2.0.tgz#c809d6fb9fc4ab6240e3cd4aed3530a0e8cee1b8"
 
-hyperapp-redux-devtools@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/hyperapp-redux-devtools/-/hyperapp-redux-devtools-1.0.5.tgz#b88157df9d711251cdf132642e865e9df76f8a9f"
+hyperapp-redux-devtools@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/hyperapp-redux-devtools/-/hyperapp-redux-devtools-1.0.9.tgz#7d199ba278b8b47177930af6c5b063470f2e27ac"
   dependencies:
     redux "^3.7.1"
     redux-devtools-extension "^2.13.2"

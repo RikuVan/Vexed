@@ -74,6 +74,19 @@ const getCorrectAnswerWith = randomFn => choices => {
 }
 const getCorrectAnswer = getCorrectAnswerWith(getRandomInRange)
 
+export const inc = x => +x + 1
+
+export const checkForMessage = numberOfCorrect => {
+  if ((numberOfCorrect % 50 === 0 && numberOfCorrect < 300)) {
+    if (numberOfCorrect === 250) {
+      return {key: 'win'}
+    } else {
+      return {key: `accomplished_${numberOfCorrect}`, type: 'congrats'}
+    }
+  }
+  return null
+}
+
 export const getChoicesWith = (getChoicesFn, getAnswerFn) => (
   countries,
   selected = [],
@@ -84,16 +97,15 @@ export const getChoicesWith = (getChoicesFn, getAnswerFn) => (
   do {
     const {code, choice} = getChoicesFn(countries)
     const ignore = []
-    // 253 flasgs total, so at 250 restart
+    // 253 flags total, so at 250 restart
     if (selected.length <= 250) {
-      ignore.concat(selected)
+      ignore.push(selected)
     } else if (selected <= 500) {
-      ignore.concat(selected.slice(250))
+      ignore.push(selected.slice(250))
     }
     if (ignore.indexOf(code) === -1) {
       --numberOfChoices
       choices.push(choice)
-      selected.push(code)
     }
   } while (numberOfChoices > 0)
   return {choices, correctAnswer: getAnswerFn(choices)}

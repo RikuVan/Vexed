@@ -1,14 +1,18 @@
-import {updateIsLoading, Immutable, getChoices} from './helpers/utils'
+import {
+  updateIsLoading,
+  Immutable,
+  getChoices,
+  inc,
+  checkForMessage,
+} from './helpers/utils'
 import {getImageUrl} from './helpers/firebase'
 import {gameStates} from './state'
-
-const inc = x => +x + 1
 
 export default {
   setIsLoading: (state, a, data) => ({key: updateIsLoading(data)(state)}),
 
   initializeRound: ({countries, game}, actions, d) => update => {
-    const {choices, correctAnswer} = getChoices(countries)
+    const {choices, correctAnswer} = getChoices(countries, game.correct)
     const flagUrl = getImageUrl(correctAnswer, game.correct)
 
     actions.updateRound({
@@ -58,6 +62,16 @@ export default {
 
     actions.updateRound({isCorrect, active: false, expired: false})
     actions.updateGame({flagsPlayed: inc(game.flagsPlayed), correct})
+
+    const message = checkForMessage(correct.length)
+
+    if (message) {
+      actions.timer.delay({
+        name: 'accomplishment_message',
+        delay: 1000,
+        action: () => actions.Messenger.dispatch(message)
+      })
+    }
   },
 
   persistTo: (s, a, {type}) => ({persistence: {type}}),

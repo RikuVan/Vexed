@@ -1,0 +1,30 @@
+{
+  "list": [
+    {
+      "key": "accomplished_50",
+      "message": "Good start! Got your first 50."
+    },
+    {
+      "key": "accomplished_100",
+      "message": "100 down and 150 to go!"
+    },
+    {
+      "key": "accomplished_150",
+      "message": "150 down, it's all downhill from here"
+    },
+    {
+      "key": "accomplished_200",
+      "message": "Awesome, 50 more and you are a real Vexillologist!"
+    },
+    {
+      "key": "accomplished_250",
+      "message": "Congrats Vexillologist! You got all the flags!",
+      "type": "congrats"
+    },
+    {
+      "key": "server_error",
+      "message": "Oops, a sever error occurred",
+      "type": "error"
+    }
+  ]
+}

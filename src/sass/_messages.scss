@@ -1,0 +1,62 @@
+.slide-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.pop-leave {
+  opacity: 0;
+  transform: scale(2.0);
+}
+
+.Messenger {
+  position: relative;
+  font: 1rem normal Helvetica, sans-serif;
+  overflow: hidden;
+  word-wrap: break-word;
+  border-radius: 3px;
+  margin-bottom: 2px;
+  max-height: 400px;
+  box-sizing: border-box;
+  box-shadow: 0 0 1px 1px rgba(10, 10, 11, .125);
+  padding: 1rem;
+  color: #fff;
+  text-align: center;
+  filter: alpha(opacity=80);
+
+  &--success {
+    background-color: $color-success;
+  }
+
+  &--info {
+    background-color: $color-info;
+  }
+
+  &--warning {
+    background-color: $color-warning;
+  }
+
+  &--error {
+    background-color: $color-error;
+  }
+
+  &--vexed {
+    background-color: lighten($color-primary, 50%);
+    color: black
+  }
+
+  &-congrats {
+    background-color: $color-secondary;
+    color: black;
+  }
+}
+
+.Messenger__container {
+  position: fixed;
+  top: 10px;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}

@@ -1,9 +1,9 @@
 import {Immutable} from '../helpers/utils'
 
-const delay = (s, action = () => {}) => {
+export const delay = (s, action = () => {}) => {
   let timeoutId
   const promise = new Promise(resolve => {
-    timeoutId = setTimeout(() => resolve(action()), s * 1000)
+    timeoutId = setTimeout(() => resolve(action()), s)
   })
 
   promise.cancel = () => clearTimeout(timeoutId)

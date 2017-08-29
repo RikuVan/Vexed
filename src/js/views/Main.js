@@ -8,7 +8,7 @@ import {levels} from '../state'
 import cx from 'classnames'
 import Map from '../partials/Map'
 
-const Main = ({s, a, Notifier}) =>
+const Main = ({s, a, FlashMessage}) =>
   <div className='app-wrapper'>
     <div className='App'>
 
@@ -66,6 +66,7 @@ const Main = ({s, a, Notifier}) =>
           </div>
         </div>
       </main>
+      <FlashMessage />
       <footer>
         Flags collected by:&nbsp;
         <a href='https://github.com/hjnilsson/country-flags'>
@@ -75,4 +76,4 @@ const Main = ({s, a, Notifier}) =>
     </div>
   </div>
 
-export default (s, a) => <Main s={s} a={a} />
+export default (s, a, V) => <Main s={s} a={a} FlashMessage={V.Messenger.flash} />

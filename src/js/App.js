@@ -6,11 +6,12 @@ import main from './views/Main'
 import auth from './mixins/auth'
 import store from './mixins/localStorage'
 import timer from './mixins/timer'
-import notifier from './mixins/notifier'
+import messenger from './mixins/messenger'
 import firebaseDb from './mixins/firebaseDb'
 import '../sass/main.scss'
 // import devtools from 'hyperapp-redux-devtools'
 import partials from 'hyperapp-partial'
+import messages from '../json/messages'
 
 app({
   state,
@@ -23,7 +24,7 @@ app({
     firebaseDb(),
     store({key: 'game', updateAction: 'updateGame'}),
     partials,
-    notifier([{name: 'auth', type: 'success'}]),
+    messenger(messages.list),
     // devtools(),
   ],
 })
