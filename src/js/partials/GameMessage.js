@@ -45,7 +45,7 @@ export const renderCurrentMessage = (
   else if (remaining) message = messages.remaining(secondsRemaining)
   else if (success) message = messages.success(elapsedTime)
   else if (failure) message = messages.failure()
-  else if (expired) message = message.expired()
+  else if (expired) message = messages.expired()
   return wrapMessage(message)
 }
 

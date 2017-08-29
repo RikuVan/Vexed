@@ -87,30 +87,40 @@ export const checkForMessage = numberOfCorrect => {
   return null
 }
 
-export const getChoicesWith = (getChoicesFn, getAnswerFn) => (
+export const getChoices = (
   countries,
   selected = [],
   level = 'easy'
 ) => {
   let numberOfChoices = level === 'hard' ? 5 : 3
+  // clone immutable version so I can mutate
+  const pool = Object.assign({}, countries)
   const choices = []
+  let ignore = selected
+  // recycle if all the flags have been gone through
+  if (selected.length >= 251 && selected.length <= 500) {
+    ignore = selected.slice(251)
+  } else if (selected > 502) {
+    ignore = selected.slice(502)
+  }
   do {
-    const {code, choice} = getChoicesFn(countries)
-    const ignore = []
-    // 253 flags total, so at 250 restart
-    if (selected.length <= 250) {
-      ignore.push(selected)
-    } else if (selected <= 500) {
-      ignore.push(selected.slice(250))
-    }
-    if (ignore.indexOf(code) === -1) {
+    const poolSize = Object.keys(pool).length
+    const {code, choice} = poolSize === 0 ? getRandomCountry(countries) : getRandomCountry(pool)
+    delete pool[code]
+    const indexOfSelection = ignore.indexOf(code)
+    const poolIsBigEnough = poolSize >= numberOfChoices - choices.length
+    if (indexOfSelection === -1 || !poolIsBigEnough) {
+      // if down to last two, give two choices
+      if (poolSize === 0 && choices.length === 2) {
+        break
+      }
       --numberOfChoices
-      choices.push(choice)
+      if (choice) {
+        choices.push(choice)
+      }
     }
   } while (numberOfChoices > 0)
-  return {choices, correctAnswer: getAnswerFn(choices)}
+  return {choices, correctAnswer: getCorrectAnswer(choices)}
 }
-
-export const getChoices = getChoicesWith(getRandomCountry, getCorrectAnswer)
 
 export {Immutable, pathOr, memoize}
