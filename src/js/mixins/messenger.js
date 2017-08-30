@@ -1,6 +1,6 @@
 import partial from 'hyperapp-partial'
 import {h} from 'hyperapp'
-import {Immutable} from '../helpers/utils'
+import * as u from '../helpers/utils'
 import {group, combine, move, enter, leave} from '../helpers/transitions'
 import {delay} from './timer'
 
@@ -8,6 +8,18 @@ const DEFAULT_MOVE_READY = 700
 const DEFAULT_ENTER_DELAY = 300
 const DEFAULT_LEAVE_READY = 5000
 const DEFAULT_TYPE = 700
+
+const replaceLiteral = (msg, literal, value) => {
+  const exp = '\\{' + literal + '\\}'
+  const re = new RegExp(exp, 'g')
+  return msg.replace(re, value)
+}
+
+export const replaceAllLiterals = (str, tuple) => {
+  const literal = tuple[0]
+  const value = tuple[1]
+  return replaceLiteral(str, literal, value)
+}
 
 const transition = (leaveReady, enterReady, delay) => group(
   combine(
@@ -29,17 +41,17 @@ export default config =>
     state: {
       messages: {},
       delay: DEFAULT_LEAVE_READY,
-      active: null,
+      active: {}
     },
 
     actions: {
-      dispatch(s, a, {key}) {
-        a.dismiss(key)
-        return {active: key}
+      dispatch(s, a, payload) {
+        a.dismiss()
+        return {active: payload}
       },
 
-      dismiss: (s, a, key) => update => {
-        delay(s.delay, () => update({active: null}))
+      dismiss: (s) => update => {
+        delay(s.delay, () => update({active: {}}))
       },
 
       register({messages}, actions, config) {
@@ -47,7 +59,7 @@ export default config =>
           m[message.key] = {...message}
           return m
         }, {})
-        return Immutable({
+        return u.Immutable({
           messages: registeredMessages,
           delay: config.delay || DEFAULT_LEAVE_READY,
         })
@@ -61,13 +73,20 @@ export default config =>
     },
 
     views: {
-      flash(s, actions) {
-        if (!s.active) return <span />
-        const m = s.messages[s.active]
+      flash(s, a) {
+        if (!s.active.key) return <span />
+
+        const m = s.messages[s.active.key]
+
+        const msg = s.active.values ? u.compose(
+          u.reduce(replaceAllLiterals, m.message),
+          u.toPairs,
+        )(s.active.values) : m.message
+
         return transition(s.delay)(
           <div className='Messenger__container'>
             <div>
-              <Message type={m.type || DEFAULT_TYPE} message={m.message} />
+              <Message type={s.type || m.type || DEFAULT_TYPE} message={msg} />
             </div>
           </div>
         )

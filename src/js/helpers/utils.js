@@ -1,4 +1,5 @@
 import pathOr from 'ramda/src/pathOr'
+import reduce from 'ramda/src/reduce'
 import head from 'ramda/src/head'
 import last from 'ramda/src/last'
 import pick from 'ramda/src/pick'
@@ -11,6 +12,7 @@ import gt from 'ramda/src/gt'
 import always from 'ramda/src/always'
 import modulo from 'ramda/src/modulo'
 import memoize from 'ramda/src/memoize'
+import toPairs from 'ramda/src/toPairs'
 
 import {static as Immutable} from 'seamless-immutable'
 
@@ -27,11 +29,7 @@ const floor = v => Math.floor(v)
 
 export const getTotalTimeFromSeconds = totalSeconds => {
   const hours = compose(
-    ifElse(
-      gt(__, 0),
-      v => `${v}h `,
-      always('')
-    ),
+    ifElse(gt(__, 0), v => `${v}h `, always('')),
     floor,
     divide(__, 3600)
   )(totalSeconds)
@@ -41,11 +39,9 @@ export const getTotalTimeFromSeconds = totalSeconds => {
     divide(__, 60),
     modulo(__, 3600)
   )(totalSeconds)
-  const seconds = compose(
-    v => `${v}s`,
-    modulo(__, 60),
-    modulo(__, 3600)
-  )(totalSeconds)
+  const seconds = compose(v => `${v}s`, modulo(__, 60), modulo(__, 3600))(
+    totalSeconds
+  )
 
   return `${hours}${minutes}${seconds}`
 }
@@ -55,7 +51,10 @@ export const getEventVal = pathOr('', ['value', 'event'])
 export const pickUserData = pick(['displayName', 'photoURL', 'uid'])
 
 // handling of random country choices
-export const getRandomInRangeWith = (method = () => 0) => (start = 0, end = 1) => {
+export const getRandomInRangeWith = (method = () => 0) => (
+  start = 0,
+  end = 1
+) => {
   const min = Math.ceil(start)
   const max = Math.floor(end)
   return Math.round(method() * (max - min) + min)
@@ -77,21 +76,21 @@ const getCorrectAnswer = getCorrectAnswerWith(getRandomInRange)
 export const inc = x => +x + 1
 
 export const checkForMessage = numberOfCorrect => {
-  if ((numberOfCorrect % 50 === 0 && numberOfCorrect < 300)) {
-    if (numberOfCorrect === 250) {
+  if (numberOfCorrect % 50 === 0 && numberOfCorrect < 300) {
+    if (numberOfCorrect === 252) {
       return {key: 'win'}
     } else {
-      return {key: `accomplished_${numberOfCorrect}`, type: 'congrats'}
+      return {
+        key: `accomplished`,
+        type: 'congrats',
+        values: {done: numberOfCorrect, todo: 252 - numberOfCorrect},
+      }
     }
   }
   return null
 }
 
-export const getChoices = (
-  countries,
-  selected = [],
-  level = 'easy'
-) => {
+export const getChoices = (countries, selected = [], level = 'easy') => {
   let numberOfChoices = level === 'hard' ? 5 : 3
   // clone immutable version so I can mutate
   const pool = Object.assign({}, countries)
@@ -105,7 +104,8 @@ export const getChoices = (
   }
   do {
     const poolSize = Object.keys(pool).length
-    const {code, choice} = poolSize === 0 ? getRandomCountry(countries) : getRandomCountry(pool)
+    const {code, choice} =
+      poolSize === 0 ? getRandomCountry(countries) : getRandomCountry(pool)
     delete pool[code]
     const indexOfSelection = ignore.indexOf(code)
     const poolIsBigEnough = poolSize >= numberOfChoices - choices.length
@@ -123,4 +123,4 @@ export const getChoices = (
   return {choices, correctAnswer: getCorrectAnswer(choices)}
 }
 
-export {Immutable, pathOr, memoize}
+export {Immutable, pathOr, memoize, toPairs, reduce, compose}

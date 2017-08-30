@@ -40,13 +40,13 @@
   }
 
   &--vexed {
-    background-color: lighten($color-primary, 50%);
-    color: black
+    background-color: lighten($color-primary, 30%);
+    color: white;
   }
 
-  &-congrats {
+  &--congrats {
     background-color: $color-secondary;
-    color: black;
+    color: white;
   }
 }
 

@@ -12,7 +12,7 @@ export default {
 
   'auth:change': (
     s,
-    {setAuth, persistTo, firebase, store},
+    {setAuth, persistTo, firebase, store, Messenger},
     {user, error, state}
   ) => {
     const addState = data =>
