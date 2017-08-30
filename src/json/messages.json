@@ -14,6 +14,11 @@
       "key": "server_error",
       "message": "Oops, a sever error occurred",
       "type": "error"
+    },
+    {
+      "key": "consecutive",
+      "message": "Awesome, {consecutive} in a row!",
+      "type": "vexed"
     }
   ]
 }

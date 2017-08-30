@@ -45,25 +45,28 @@ export default {
     const isCorrect =
       choice === round.answer && timers.game.secondsRemaining > 0
     const correct = isCorrect ? game.correct.concat([choice]) : game.correct
+    const consecutiveCorrect = isCorrect ? game.consecutiveCorrect + 1 : 0
+
+    const payload = {
+      flagsPlayed: inc(game.flagsPlayed),
+      correct,
+      consecutiveCorrect
+    }
 
     if (auth.user !== null) {
       await actions.firebase.update({
         resource: 'game',
         uid: auth.user.uid,
-        payload: {
-          flagsPlayed: inc(game.flagsPlayed),
-          correct,
-          totalTime: game.totalTime,
-        },
+        payload: Object.assign(payload, {totalTime: game.totalTime})
       })
     } else {
       actions.store.save()
     }
 
     actions.updateRound({isCorrect, active: false, expired: false})
-    actions.updateGame({flagsPlayed: inc(game.flagsPlayed), correct})
+    actions.updateGame(payload)
 
-    const message = checkForMessage(correct.length)
+    const message = checkForMessage(correct.length, consecutiveCorrect)
 
     if (message) {
       actions.timer.delay({
@@ -74,6 +77,7 @@ export default {
     }
   },
 
+  // set if localStorage fallback or firebase db
   persistTo: (s, a, {type}) => ({persistence: {type}}),
 
   changeLevel: (s, a, {level}) => ({

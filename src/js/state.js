@@ -48,7 +48,8 @@ export default {
     flagsPlayed: 0,
     level: levels.EASY,
     rating: 0,
-    totalTime: 0
+    totalTime: 0,
+    consecutiveCorrect: 0
   }),
   timers: Immutable({
     game: {timerId: null, secondsRemaining: null}

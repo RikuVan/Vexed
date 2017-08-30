@@ -16,6 +16,8 @@ import toPairs from 'ramda/src/toPairs'
 
 import {static as Immutable} from 'seamless-immutable'
 
+export const inc = x => +x + 1
+
 export const updateIsLoading = state =>
   converge(
     (key, isLoading) =>
@@ -23,10 +25,23 @@ export const updateIsLoading = state =>
     [head, last]
   )
 
-//
-
 const floor = v => Math.floor(v)
 
+// check if we should send a flash message recongnizing accomplishment
+export const checkForMessage = (numberOfCorrect, consecutive) => {
+  if (numberOfCorrect === 252) return {key: 'win'}
+  if (consecutive > 9 && consecutive % 10 === 0) return {key: 'consecutive', values: {consecutive}}
+  if (numberOfCorrect % 50 === 0 && numberOfCorrect < 300) {
+    return {
+      key: `accomplished`,
+      type: 'congrats',
+      values: {done: numberOfCorrect, todo: 252 - numberOfCorrect},
+    }
+  }
+  return null
+}
+
+// format seconds to Xh Xm Xs for nav bar
 export const getTotalTimeFromSeconds = totalSeconds => {
   const hours = compose(
     ifElse(gt(__, 0), v => `${v}h `, always('')),
@@ -72,23 +87,6 @@ const getCorrectAnswerWith = randomFn => choices => {
   return Object.keys(choices[randomFn(0, choices.length - 1)])[0]
 }
 const getCorrectAnswer = getCorrectAnswerWith(getRandomInRange)
-
-export const inc = x => +x + 1
-
-export const checkForMessage = numberOfCorrect => {
-  if (numberOfCorrect % 50 === 0 && numberOfCorrect < 300) {
-    if (numberOfCorrect === 252) {
-      return {key: 'win'}
-    } else {
-      return {
-        key: `accomplished`,
-        type: 'congrats',
-        values: {done: numberOfCorrect, todo: 252 - numberOfCorrect},
-      }
-    }
-  }
-  return null
-}
 
 export const getChoices = (countries, selected = [], level = 'easy') => {
   let numberOfChoices = level === 'hard' ? 5 : 3
