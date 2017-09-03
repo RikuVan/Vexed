@@ -15,9 +15,11 @@ const GameView = ({s, a}) => (
 
     {!s.auth.user && s.game.state === gameStates.UNINITIALIZED &&
     <aside className='intro'>
-      <h3>Welcome!</h3>
+      <h3>Intro</h3>
       <p>There are 252 country flags to recognize.</p>
-      <p>To compare with others, sign in with Google.</p>
+      <p>Time is limited. Choose your level below.</p>
+      <p>That's it. Play and learn.</p>
+      <p>Oh yeah, to compare your skill with others, sign in with Google.</p>
     </aside>
     }
     <div className='options'>

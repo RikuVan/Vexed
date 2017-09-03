@@ -37,7 +37,6 @@ h1, h2, h4 {
 }
 
 main {
-  @include flex(column, wrap, space-around, center);
   background-color: $color-background;
   border-radius: 2px;
   margin-bottom: 5em;
@@ -46,7 +45,8 @@ main {
   padding-right: 2em;
 }
 
-.Game-view {
+.Game-view,
+.Rankings-view {
   @include flex(column, wrap, space-around, center);
   width: 100%;
 }
