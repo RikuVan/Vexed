@@ -1,4 +1,5 @@
-import {h, app} from 'hyperapp' // eslint-disable-line no-unused-vars
+import 'whatwg-fetch'
+import {app} from 'hyperapp'
 import state from './state'
 import actions from './actions'
 import events from './events'
@@ -27,4 +28,5 @@ app({
     messenger(messages.list),
     // devtools(),
   ],
+  root: document.getElementById('app')
 })

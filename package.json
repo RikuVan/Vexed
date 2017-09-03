@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf ./build",
-    "start": "npm run clean && npm run webpack:dev",
-    "build": "npm run clean && npm run webpack:prod",
+    "start": "npm run clean && npm run build:maptopjson && npm run webpack:dev",
+    "build": "npm run clean && npm run build:maptopjson && npm run webpack:prod",
+    "build:maptopjson": "node maptopojson.js",
     "webpack:prod": "cross-env NODE_ENV=production webpack --progress --colors",
     "webpack:dev": "cross-env NODE_ENV=development webpack --progress --colors --watch",
     "lint": "eslint src/ --cache",
@@ -20,10 +21,11 @@
     "d3": "^4.10.0",
     "firebase": "^4.2.0",
     "hyperapp": "^0.12.0",
-    "hyperapp-partial": "^0.2.0",
+    "hyperapp-partial": "^0.4.1",
     "ramda": "^0.24.1",
     "seamless-immutable": "^7.1.2",
-    "topojson": "^3.0.0"
+    "topojson": "^3.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

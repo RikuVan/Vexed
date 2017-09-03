@@ -54,7 +54,7 @@ test('active game should return remaining time', () => {
 })
 
 test('expired game should return expired message', () => {
-  data.round.active = false
+  data.round.active = true
   data.timer.secondsRemaining = 0
   data.round.elapsedTime = 10
   data.round.expired = true
@@ -74,6 +74,7 @@ test('incorrect answer should return failure message', () => {
   data.timer.secondsRemaining = 5
   data.round.elapsedTime = 5
   data.round.isCorrect = false
+  data.round.expired = false
 
   const message = renderCurrentMessage(
     data.timer,

@@ -44,5 +44,10 @@ export default () => emit => ({
         emit('auth:change', {state: 'logoutFailed'})
       }
     },
+
+    getToken: s => async update => {
+      const idToken = await auth.currentUser.getIdToken(false)
+      return update({auth: Immutable.set(s.auth, 'idToken', idToken)})
+    }
   }
 })

@@ -1,0 +1,17 @@
+.intro {
+  @include flex(column, wrap, center, center);
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 1em;
+  }
+
+  p {
+    font-size: 16px;
+
+    &:first-of-type {
+      padding-bottom: 1em;
+    }
+  }
+}

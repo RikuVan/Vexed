@@ -1,79 +1,77 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
+import GameView from './GameView'
+import Rankings from './Rankings'
 import Nav from '../partials/Nav'
 import GameMessage from '../partials/GameMessage'
-import Choices from '../partials/Choices'
-import Flag from '../partials/Flag'
-import GameButton from '../partials/GameButton'
-import {levels} from '../state'
-import cx from 'classnames'
+import {views} from '../state'
 import Map from '../partials/Map'
 
-const Main = ({s, a, FlashMessage}) =>
-  <div className='app-wrapper'>
-    <div className='App'>
+const viewMap = {
+  [views.DEFAULT]: GameView,
+  [views.RANKINGS]: Rankings,
+}
 
-      <Map correct={s.game.correct} />
+const Main = ({s, a, FlashMessage}) => {
+  const View = viewMap[s.view]
+  const isDefault = s.view === views.DEFAULT
+  return (
+    <div className='app-wrapper'>
+      <div className='App'>
 
-      <header className='App-header'>
-        <i className='fa fa-flag-o' aria-hidden='true' />
-        <h1>Vexed</h1>
-        <h4>A game to improve your vexillogical knowledge</h4>
-      </header>
+        <Map correct={s.game.correct} />
 
-      <Nav s={s} a={a} />
+        <header className='App-header'>
+          <i className='fa fa-flag-o' aria-hidden='true' />
+          <h1>Vexed</h1>
+          <h4>A game to improve your vexillogical knowledge</h4>
+        </header>
 
-      <main>
-        <GameMessage
-          timer={s.timers.game}
-          round={s.round}
-          gameState={s.game.state}
-        />
+        <Nav s={s} a={a} />
 
-        <div className='flag' id='flag'>
-          {s.round.flagUrl
-            ? <Flag round={s.round} updateRound={a.updateRound} />
-            : <i className='fa fa-flag-o' aria-hidden='true' />}
-        </div>
+        <main>
+          <div className='main-top'>
+            <div className='left-top-row'>
+              {s.auth.user && (
+                <button className='Button Button-rankings'>
+                  <a
+                    onclick={() =>
+                      a.changeView(isDefault ? views.RANKINGS : views.DEFAULT)}
+                  >
+                    {isDefault ? 'Show rankings' : 'Back to game'}
+                  </a>
+                </button>
+              )}
+            </div>
 
-        <div className='options'>
-          <Choices
-            choices={s.round.choices}
-            handleChoice={a.handleChoice}
-            selected={s.round.select}
-            active={s.round.active}
-            loading={s.round.isLoading}
-          />
-        </div>
+            <GameMessage
+              timer={s.timers.game}
+              round={s.round}
+              gameState={s.game.state}
+              view={s.view}
+            />
 
-        <div className='controls'>
-          <GameButton
-            gameTimer={s.timers.game}
-            round={s.round}
-            onClick={a.initializeRound}
-          />
-        </div>
-
-        <div className='levels'>
-          <div className='level-dots'>
-            {Object.entries(levels).map((level, i) =>
-              <div
-                className={cx('dot', `dot-${i}`, {
-                  active: s.game.level === level[1],
-                })}
-                onclick={() => a.changeLevel({level: level[1]})}
-              />
-            )}
+            <div className='right-top-row' />
           </div>
-        </div>
-      </main>
-      <FlashMessage />
-      <footer>
-        Flags collected by:&nbsp;
-        <a href='https://github.com/hjnilsson/country-flags'>
-          Hampus Joakim Nilsson
-        </a>
-      </footer>
-    </div>
-  </div>
 
-export default (s, a, V) => <Main s={s} a={a} FlashMessage={V.Messenger.flash} />
+          <View s={s} a={a} />
+        </main>
+
+        <FlashMessage />
+
+        <footer>
+          Flags collected by:&nbsp;
+          <a href='https://github.com/hjnilsson/country-flags'>
+            Hampus Joakim Nilsson
+          </a>
+          &nbsp;|&nbsp; Report bugs at:&nbsp;
+          <a href='https://github.com/RikuVan/Vexed/issues'>Github</a>
+        </footer>
+
+      </div>
+    </div>
+  )
+}
+
+export default (s, a, V) => (
+  <Main s={s} a={a} FlashMessage={V.Messenger.flash} />
+)

@@ -15,6 +15,11 @@ export const gameStates = {
   FINISHED: 'finished'
 }
 
+export const views = {
+  DEFAULT: 'default',
+  RANKINGS: 'rankings'
+}
+
 export const storageTypes = {
   LOCAL: 'local',
   FIREBASE: 'firebase'
@@ -27,7 +32,8 @@ export default {
   auth: Immutable({
     user: null,
     error: null,
-    isLoading: false
+    isLoading: false,
+    idToken: null
   }),
   countries: Immutable(countries),
   round: Immutable({
@@ -49,9 +55,18 @@ export default {
     level: levels.EASY,
     rating: 0,
     totalTime: 0,
-    consecutiveCorrect: 0
+    consecutiveCorrect: 0,
+    playerName: ''
   }),
   timers: Immutable({
     game: {timerId: null, secondsRemaining: null}
-  })
+  }),
+  editors: Immutable({
+    name: false
+  }),
+  rankings: Immutable({
+    isLoading: false,
+    players: []
+  }),
+  view: Immutable(views.DEFAULT)
 }

@@ -2,9 +2,15 @@ import {Immutable} from './helpers/utils'
 import {gameStates} from './state'
 
 export default {
-  'timer:expired': (s, {handleChoice, timer}, d) => {
+  load: () => {
+    const root = document.getElementById('app')
+    const loader = document.getElementById('app-loader')
+    root.removeChild(loader)
+  },
+  'timer:expired': (s, {handleChoice, timer, expireRound}, d) => {
+    expireRound()
     timer.delay({
-      seconds: 1.3,
+      seconds: 2000,
       name: 'round-over',
       action: () => handleChoice({answer: ''}),
     })
@@ -12,7 +18,7 @@ export default {
 
   'auth:change': (
     s,
-    {setAuth, persistTo, firebase, store, Messenger},
+    {setAuth, persistTo, firebase, store, getToken},
     {user, error, state}
   ) => {
     const addState = data =>
@@ -23,6 +29,7 @@ export default {
       persistTo({type: 'firebase'})
       firebase.get({resource: 'game', uid: user.uid, decorate: addState})
       store.remove()
+      getToken()
     }
 
     switch (state) {

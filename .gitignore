@@ -4,4 +4,5 @@ public/
 node_modules
 npm-debug.log
 secrets.js
+src/json/topo.json
 

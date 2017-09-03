@@ -1,8 +1,8 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
-import {gameStates} from '../state'
-import {memoize} from '../helpers/utils'
+import {gameStates, views} from '../state'
 
 const messages = {
+  rankings: () => <span>Player rankings</span>,
   expired: () => <span>Oops, time expired</span>,
   welcome: () => <span>Welcome. Ready to get vexed?</span>,
   remaining: time =>
@@ -27,7 +27,8 @@ export const renderCurrentMessage = (
   round,
   gameState,
   messages,
-  wrapMessage
+  wrapMessage,
+  view
 ) => {
   const {active, isCorrect, elapsedTime, isLoading, expired: roundExpired} = round
   const {secondsRemaining} = timer
@@ -37,20 +38,22 @@ export const renderCurrentMessage = (
   const welcome = gameState !== gameStates.IN_PROGRESS && !active
   const remaining = active && isCorrect === null
   const success = elapsedTime > 0 && isCorrect
-  const failure = elapsedTime > 0 && isCorrect === false
-  const expired = roundExpired === true
+  const failure = elapsedTime > 0 && isCorrect === false && !roundExpired
+  const expired = roundExpired === true && active
 
   let message = messages.next()
   if (welcome) message = messages.welcome()
+  else if (expired) message = messages.expired()
   else if (remaining) message = messages.remaining(secondsRemaining)
   else if (success) message = messages.success(elapsedTime)
   else if (failure) message = messages.failure()
-  else if (expired) message = messages.expired()
   return wrapMessage(message)
 }
 
-export default memoize(({timer, round, gameState}) =>
+export default ({timer, round, gameState, view}) =>
   <div className='messages'>
-    {renderCurrentMessage(timer, round, gameState, messages, wrapMessage)}
+    {view === views.RANKINGS
+      ? <h2 className='rankings-title'>Player rankings</h2>
+      : renderCurrentMessage(timer, round, gameState, messages, wrapMessage)
+    }
   </div>
-)

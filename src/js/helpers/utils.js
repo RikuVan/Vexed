@@ -1,7 +1,6 @@
 import pathOr from 'ramda/src/pathOr'
 import reduce from 'ramda/src/reduce'
-import head from 'ramda/src/head'
-import last from 'ramda/src/last'
+import flatten from 'ramda/src/flatten'
 import pick from 'ramda/src/pick'
 import converge from 'ramda/src/converge'
 import compose from 'ramda/src/compose'
@@ -18,11 +17,30 @@ import {static as Immutable} from 'seamless-immutable'
 
 export const inc = x => +x + 1
 
-export const updateIsLoading = state =>
+export const round = (num, places) => {
+  const multiplier = Math.pow(10, places)
+  return Math.round(num * multiplier) / multiplier
+}
+
+export const updateIsLoading = (loading, state) => {
+  return compose(
+    (loading) => {
+      const [key, isLoading] = loading
+      return {[key]: Immutable.set(state[key], 'isLoading', isLoading)}
+    },
+    flatten,
+    toPairs
+  )(loading)
+}
+
+export const getName =
   converge(
-    (key, isLoading) =>
-      Immutable({key: Immutable.setIn(state, [key, 'isLoading'], isLoading)}),
-    [head, last]
+    (displayName, playerName) =>
+      playerName.trim().length > 0 ? playerName : displayName,
+    [
+      pathOr('', ['auth', 'user', 'displayName']),
+      pathOr('', ['game', 'playerName']),
+    ]
   )
 
 const floor = v => Math.floor(v)
@@ -30,8 +48,10 @@ const floor = v => Math.floor(v)
 // check if we should send a flash message recongnizing accomplishment
 export const checkForMessage = (numberOfCorrect, consecutive) => {
   if (numberOfCorrect === 252) return {key: 'win'}
-  if (consecutive > 9 && consecutive % 10 === 0) return {key: 'consecutive', values: {consecutive}}
-  if (numberOfCorrect % 50 === 0 && numberOfCorrect < 300) {
+  if (consecutive > 9 && consecutive % 10 === 0) {
+    return {key: 'consecutive', values: {consecutive}}
+  }
+  if (numberOfCorrect >= 10 && numberOfCorrect % 50 === 0 && numberOfCorrect < 300) {
     return {
       key: `accomplished`,
       type: 'congrats',

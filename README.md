@@ -7,12 +7,9 @@ This quiz app is a work in progress. Check out the progress at [www.vexed.fun](h
  - Besides having fun with flags, this is a demo of the awesome and tiny functional [Hyperapp](https://github.com/hyperapp/hyperapp).
  
 ## Todo
+  - own route for rankings
+  - remove history/delete account btns
 
-  - rating algorithm
-  - leader board
-  - change display name
-  - remove history btn
-  - reduce size of topojson
 
 
 

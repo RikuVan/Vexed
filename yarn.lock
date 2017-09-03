@@ -3172,9 +3172,9 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
-hyperapp-partial@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/hyperapp-partial/-/hyperapp-partial-0.2.0.tgz#c809d6fb9fc4ab6240e3cd4aed3530a0e8cee1b8"
+hyperapp-partial@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/hyperapp-partial/-/hyperapp-partial-0.4.1.tgz#899ac193e3d3c7d35432c1c854b4dfce966516f1"
 
 hyperapp-redux-devtools@^1.0.9:
   version "1.0.9"
@@ -6439,6 +6439,10 @@ whatwg-encoding@^1.0.1:
   resolved "https://registry.yarnpkg.com/whatwg-encoding/-/whatwg-encoding-1.0.1.tgz#3c6c451a198ee7aec55b1ec61d0920c67801a5f4"
   dependencies:
     iconv-lite "0.4.13"
+
+whatwg-fetch@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
 
 whatwg-url@^4.3.0:
   version "4.8.0"

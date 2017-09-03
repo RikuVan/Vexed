@@ -5,13 +5,19 @@ const api = {
   players: () => db.ref('V0/players'),
   player: ({uid}) => db.ref(`V0/players/${uid}`),
   game: ({uid}) => db.ref(`V0/players/${uid}/game`),
+  playerName: ({uid}) => db.ref(`V0/players/${uid}/game/playerName`),
   leaders: () => db.ref(`V0/leaders`)
 }
 
 const cb = snapshot => snapshot.val()
 
-const dbFn = operation => async ({resource, uid, payload}, emit) => {
+const dbFn = operation => async ({resource, uid, payload}) => {
   let query = []
+
+  if (!api[resource]) {
+    console.error('The api requested resource does not exist: ', resource) // eslint-disable-line no-console
+    return null
+  }
 
   if (operation !== 'remove') {
     query = payload ? [payload] : ['value', cb]

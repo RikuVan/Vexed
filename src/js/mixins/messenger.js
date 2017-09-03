@@ -50,7 +50,7 @@ export default config =>
         return {active: payload}
       },
 
-      dismiss: (s) => update => {
+      dismiss: s => update => {
         delay(s.delay, () => update({active: {}}))
       },
 

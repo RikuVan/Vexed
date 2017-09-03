@@ -66,7 +66,7 @@ const init = (data, correct) => {
 const Map = memoize(({correct}) => {
   let data = {}
   queue()
-    .defer(json, 'topo-countries.json')
+    .defer(json, 'topo.json')
     .await((error, response) => {
       if (error) return null
       data = response

@@ -27,7 +27,11 @@ h1 {
   font-size: 3em;
 }
 
-h1, h4 {
+h2 {
+  font-size: 2em;
+}
+
+h1, h2, h4 {
   font-family: 'Carrois Gothic SC', sans-serif;
   margin: 0;
 }
@@ -40,6 +44,11 @@ main {
   padding-bottom: 2em;
   padding-left: 2em;
   padding-right: 2em;
+}
+
+.Game-view {
+  @include flex(column, wrap, space-around, center);
+  width: 100%;
 }
 
 .App-intro {
@@ -106,4 +115,25 @@ footer {
   }
 }
 
+.main-top {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+@media (max-width: 800px) {
+  .main-top {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.left-top-row,
+.right-top-row {
+  min-width: 160px;
+}
+
+.fa.fa-spinner {
+  color: $color-primary;
+}

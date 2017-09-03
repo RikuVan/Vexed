@@ -3,9 +3,9 @@
     "V0": {
       "players": {
         "$uid": {
+          ".read": "auth !== null && auth.provider === 'google' && $uid === auth.uid",
           "game": {
-            ".write": "auth !== null && auth.provider === 'google' && $uid === auth.uid",
-            ".read": "auth !== null && auth.provider === 'google' && $uid === auth.uid"
+            ".write": "auth !== null && auth.provider === 'google' && $uid === auth.uid"
           }
         }
       }

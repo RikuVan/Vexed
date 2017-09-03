@@ -54,8 +54,8 @@ const createPlugins = () =>
         to: path.join(ROOT_PATH, './public'),
       },
       {
-        from: path.join(ROOT_PATH, './maps/countries/topo-countries.json'),
-        to: path.join(ROOT_PATH, './public'),
+        from: path.join(ROOT_PATH, './src/json/topo.json'),
+        to: path.join(ROOT_PATH, './public/'),
       }
     ]),
 

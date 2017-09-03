@@ -33,5 +33,18 @@
       background-color: #A19A46;
     }
   }
+
+  &-rankings {
+    margin-top: 2em;
+    font-weight: 500;
+    color: $color-primary;
+    border-color: $color-primary;
+
+    &:hover {
+      background: $color-primary;
+      color: $color-background;
+      border-color: $color-background;
+    }
+  }
 }
 
