@@ -44,18 +44,20 @@ const gameActions = {
       choice === round.answer && timers.game.secondsRemaining > 0
     const correct = isCorrect ? game.correct.concat([choice]) : game.correct
     const consecutiveCorrect = isCorrect ? game.consecutiveCorrect + 1 : 0
+    const totalTime = timers.game.secondsRemaining + game.totalTime
 
     const payload = {
       flagsPlayed: inc(game.flagsPlayed),
       correct,
       consecutiveCorrect,
+      totalTime
     }
 
     if (auth.user !== null) {
       await actions.firebase.update({
         resource: 'game',
         uid: auth.user.uid,
-        payload: Object.assign(payload, {totalTime: game.totalTime}),
+        payload,
       })
     } else {
       actions.store.save()
@@ -86,7 +88,7 @@ const gameActions = {
 
 export default {
   // set any root prop's isLoading child
-  setIsLoading: (state, a, data) => (updateIsLoading(data, state)),
+  setIsLoading: (state, a, data) => updateIsLoading(data, state),
 
   // set if localStorage fallback or firebase db
   persistTo: (s, a, {type}) => ({persistence: {type}}),
@@ -112,7 +114,12 @@ export default {
     setIsLoading({rankings: true})
     fetchRankings(auth.idToken)
       .then(data => {
-        update({rankings: Immutable.merge(rankings, {players: data, isLoading: false})})
+        update({
+          rankings: Immutable.merge(rankings, {
+            players: data,
+            isLoading: false,
+          }),
+        })
       })
       .catch(() => {
         setIsLoading({rankings: false})
@@ -120,9 +127,23 @@ export default {
       })
   },
 
-  changeView: ({view}, {getRankings}, V) => {
+  changeView: ({view, round}, {getRankings, updateRound}, V) => {
     if (V === 'rankings') {
       getRankings()
+    } else {
+      // reset when returning to main view
+      updateRound({
+        flagUrl: '',
+        choices: [],
+        answer: null,
+        active: false,
+        isCorrect: null,
+        elapsedTime: null,
+        selected: null,
+        isLoading: false,
+        error: null,
+        expired: null,
+      })
     }
     return {view: Immutable(V)}
   },

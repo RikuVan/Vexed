@@ -31,7 +31,12 @@ export default () => emit => ({
     timer: {
       count: ({timers}, a, {seconds, name}) => {
         const id = tick(seconds, a.timer.decrement, name, emit)
-        return {timers: Immutable.set(timers, name, {timerId: id, secondsRemaining: seconds})}
+        return {
+          timers: Immutable.set(timers, name, {
+            timerId: id,
+            secondsRemaining: seconds,
+          }),
+        }
       },
 
       delay: ({timers}, a, {seconds, action, name}) => {
@@ -47,19 +52,19 @@ export default () => emit => ({
 
       remove: ({timers}) => ({timers: Immutable.without(timers, name)}),
 
-      decrement: ({timers}, a, {name}) =>
-        ({timers: Immutable.updateIn(timers, [name, 'secondsRemaining'], dec)}),
+      decrement: ({timers}, a, {name}) => ({
+        timers: Immutable.updateIn(timers, [name, 'secondsRemaining'], dec),
+      }),
 
-      setTimes: ({timers, game, round}, a, {name}) => {
+      setTimes: ({timers, game, round}, {timer}, {name}) => {
         const secondsRemaining = timers[name].secondsRemaining
         const secondsElapsed = game.level - secondsRemaining
-        const totalTime = game.totalTime + secondsElapsed
         const expired = timers[name].secondsRemaining === 0
+
         return {
           round: Immutable.merge(round, {elapsedTime: secondsElapsed, expired}),
-          game: Immutable.set(game, 'totalTime', totalTime)
         }
       },
     },
-  }
+  },
 })

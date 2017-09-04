@@ -24,7 +24,7 @@ export const round = (num, places) => {
 
 export const updateIsLoading = (loading, state) => {
   return compose(
-    (loading) => {
+    loading => {
       const [key, isLoading] = loading
       return {[key]: Immutable.set(state[key], 'isLoading', isLoading)}
     },
@@ -33,15 +33,14 @@ export const updateIsLoading = (loading, state) => {
   )(loading)
 }
 
-export const getName =
-  converge(
-    (displayName, playerName) =>
-      playerName.trim().length > 0 ? playerName : displayName,
-    [
-      pathOr('', ['auth', 'user', 'displayName']),
-      pathOr('', ['game', 'playerName']),
-    ]
-  )
+export const getName = converge(
+  (displayName, playerName) =>
+    playerName.trim().length > 0 ? playerName : displayName,
+  [
+    pathOr('', ['auth', 'user', 'displayName']),
+    pathOr('', ['game', 'playerName']),
+  ]
+)
 
 const floor = v => Math.floor(v)
 
@@ -51,7 +50,12 @@ export const checkForMessage = (numberOfCorrect, consecutive) => {
   if (consecutive > 9 && consecutive % 10 === 0) {
     return {key: 'consecutive', values: {consecutive}}
   }
-  if (numberOfCorrect >= 10 && numberOfCorrect % 50 === 0 && numberOfCorrect < 300) {
+  if (
+    consecutive > 0 &&
+    numberOfCorrect >= 10 &&
+    numberOfCorrect % 50 === 0 &&
+    numberOfCorrect < 300
+  ) {
     return {
       key: `accomplished`,
       type: 'congrats',
@@ -68,12 +72,14 @@ export const getTotalTimeFromSeconds = totalSeconds => {
     floor,
     divide(__, 3600)
   )(totalSeconds)
+
   const minutes = compose(
     v => `${v}m `,
     floor,
     divide(__, 60),
     modulo(__, 3600)
   )(totalSeconds)
+
   const seconds = compose(v => `${v}s`, modulo(__, 60), modulo(__, 3600))(
     totalSeconds
   )
@@ -120,6 +126,7 @@ export const getChoices = (countries, selected = [], level = 'easy') => {
   } else if (selected > 502) {
     ignore = selected.slice(502)
   }
+
   do {
     const poolSize = Object.keys(pool).length
     const {code, choice} =
@@ -127,12 +134,14 @@ export const getChoices = (countries, selected = [], level = 'easy') => {
     delete pool[code]
     const indexOfSelection = ignore.indexOf(code)
     const poolIsBigEnough = poolSize >= numberOfChoices - choices.length
+
     if (indexOfSelection === -1 || !poolIsBigEnough) {
       // if down to last two, give two choices
       if (poolSize === 0 && choices.length === 2) {
         break
       }
       --numberOfChoices
+
       if (choice) {
         choices.push(choice)
       }
