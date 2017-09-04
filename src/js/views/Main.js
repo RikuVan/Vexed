@@ -1,23 +1,18 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
-import GameView from './GameView'
+import {Link} from '@hyperapp/router'
+import Game from './Game'
 import Rankings from './Rankings'
 import Nav from '../partials/Nav'
 import GameMessage from '../partials/GameMessage'
-import {views} from '../state'
 import Map from '../partials/Map'
 
-const viewMap = {
-  [views.DEFAULT]: GameView,
-  [views.RANKINGS]: Rankings,
-}
-
 const Main = ({s, a, FlashMessage}) => {
-  const View = viewMap[s.view]
-  const isDefault = s.view === views.DEFAULT
+  const isRankings = s.router.match.includes('rankings')
+  const View = isRankings ? Rankings : Game
+
   return (
     <div className='app-wrapper'>
       <div className='App'>
-
         <Map correct={s.game.correct} />
 
         <header className='App-header'>
@@ -31,15 +26,12 @@ const Main = ({s, a, FlashMessage}) => {
         <main>
           <div className='main-top'>
             <div className='left-top-row'>
-              {s.auth.user && (
-                <button className='Button Button-rankings'>
-                  <a
-                    onclick={() =>
-                      a.changeView(isDefault ? views.RANKINGS : views.DEFAULT)}
-                  >
-                    {isDefault ? 'Show rankings' : 'Back to game'}
-                  </a>
-                </button>
+              {(s.auth.user || isRankings) && (
+                <Link to={isRankings ? '/' : 'rankings'} go={a.router.go}>
+                  <button className='Button Button-rankings'>
+                    {isRankings ? 'Back to game' : 'Show rankings'}
+                  </button>
+                </Link>
               )}
             </div>
 
@@ -47,7 +39,7 @@ const Main = ({s, a, FlashMessage}) => {
               timer={s.timers.game}
               round={s.round}
               gameState={s.game.state}
-              view={s.view}
+              isRankingsView={isRankings}
             />
 
             <div className='right-top-row' />
@@ -66,7 +58,6 @@ const Main = ({s, a, FlashMessage}) => {
           &nbsp;|&nbsp; Report bugs at:&nbsp;
           <a href='https://github.com/RikuVan/Vexed/issues'>Github</a>
         </footer>
-
       </div>
     </div>
   )

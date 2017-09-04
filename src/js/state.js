@@ -15,11 +15,6 @@ export const gameStates = {
   FINISHED: 'finished'
 }
 
-export const views = {
-  DEFAULT: 'default',
-  RANKINGS: 'rankings'
-}
-
 export const storageTypes = {
   LOCAL: 'local',
   FIREBASE: 'firebase'
@@ -67,6 +62,5 @@ export default {
   rankings: Immutable({
     isLoading: false,
     players: []
-  }),
-  view: Immutable(views.DEFAULT)
+  })
 }

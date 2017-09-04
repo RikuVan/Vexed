@@ -110,9 +110,9 @@ export default {
     closeEditor({type: 'name'})
   },
 
-  getRankings: ({auth, rankings}, {setIsLoading}) => update => {
+  getRankings: ({auth, rankings}, {setIsLoading}, token) => update => {
     setIsLoading({rankings: true})
-    fetchRankings(auth.idToken)
+    fetchRankings(token)
       .then(data => {
         update({
           rankings: Immutable.merge(rankings, {
@@ -125,27 +125,6 @@ export default {
         setIsLoading({rankings: false})
         console.log('Not authorized to load rankings') // eslint-disable-line no-console
       })
-  },
-
-  changeView: ({view, round}, {getRankings, updateRound}, V) => {
-    if (V === 'rankings') {
-      getRankings()
-    } else {
-      // reset when returning to main view
-      updateRound({
-        flagUrl: '',
-        choices: [],
-        answer: null,
-        active: false,
-        isCorrect: null,
-        elapsedTime: null,
-        selected: null,
-        isLoading: false,
-        error: null,
-        expired: null,
-      })
-    }
-    return {view: Immutable(V)}
   },
 
   ...gameActions,

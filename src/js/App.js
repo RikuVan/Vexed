@@ -1,5 +1,6 @@
 import 'whatwg-fetch'
 import {app} from 'hyperapp'
+import {Router} from '@hyperapp/router'
 import state from './state'
 import actions from './actions'
 import events from './events'
@@ -16,10 +17,14 @@ import messages from '../json/messages'
 
 app({
   state,
-  view: main,
+  view: [
+    ['/', main],
+    ['/rankings', main]
+  ],
   actions,
   events,
   mixins: [
+    Router,
     auth(),
     timer(),
     firebaseDb(),

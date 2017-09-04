@@ -4,6 +4,13 @@ import {round} from '../helpers/utils'
 
 const Rankings = ({s, a}) => {
   const {isLoading, players} = s.rankings
+  if (!s.auth.user) {
+    return (
+      <div className='Rankings-view'>
+        <h4>You must be logged in to access this page</h4>
+      </div>
+    )
+  }
   if (isLoading) {
     return (
       <div className='Rankings-view'>

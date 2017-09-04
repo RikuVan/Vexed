@@ -1,5 +1,5 @@
 import {h} from 'hyperapp' // eslint-disable-line no-unused-vars
-import {gameStates, views} from '../state'
+import {gameStates} from '../state'
 
 const messages = {
   rankings: () => <span>Player rankings</span>,
@@ -28,7 +28,6 @@ export const renderCurrentMessage = (
   gameState,
   messages,
   wrapMessage,
-  view
 ) => {
   const {active, isCorrect, elapsedTime, isLoading, expired: roundExpired} = round
   const {secondsRemaining} = timer
@@ -50,9 +49,9 @@ export const renderCurrentMessage = (
   return wrapMessage(message)
 }
 
-export default ({timer, round, gameState, view}) =>
+export default ({timer, round, gameState, isRankingsView}) =>
   <div className='messages'>
-    {view === views.RANKINGS
+    {isRankingsView
       ? <h2 className='rankings-title'>Player rankings</h2>
       : renderCurrentMessage(timer, round, gameState, messages, wrapMessage)
     }

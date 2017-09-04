@@ -14,14 +14,15 @@ const GameView = ({s, a}) => (
     </div>
 
     {!s.auth.user && s.game.state === gameStates.UNINITIALIZED &&
-    <aside className='intro'>
-      <h3>Intro</h3>
-      <p>There are 252 country flags to recognize.</p>
-      <p>Time is limited. Choose your level below.</p>
-      <p>That's it. Play and learn.</p>
-      <p>Oh yeah, to compare your skill with others, sign in with Google.</p>
-    </aside>
+      <aside className='intro'>
+        <h3>Intro</h3>
+        <p>There are 252 country flags to recognize.</p>
+        <p>Time is limited. Choose your level below.</p>
+        <p>That's it. Play and learn.</p>
+        <p>Oh yeah, to compare your skill with others, sign in with Google.</p>
+      </aside>
     }
+
     <div className='options'>
       <Choices
         choices={s.round.choices}

@@ -7,14 +7,14 @@ import {pickUserData, Immutable} from '../helpers/utils'
 export default () => emit => ({
   events: {
     load(s, a) {
-      auth.onAuthStateChanged(user => {
+      auth.onAuthStateChanged(async user => {
         if (user) {
           const userData = pickUserData(user)
-
-          emit('auth:change', {state: 'loggedIn', user: userData})
+          const idToken = await auth.currentUser.getIdToken(false)
+          emit('auth:change', {state: 'loggedIn', payload: {user: userData, idToken}})
         }
       })
-    },
+    }
   },
   actions: {
     setAuth({auth}, a, d) {

@@ -2,11 +2,12 @@ import {Immutable} from './helpers/utils'
 import {gameStates} from './state'
 
 export default {
-  load: () => {
+  'load': () => {
     const root = document.getElementById('app')
     const loader = document.getElementById('app-loader')
     root.removeChild(loader)
   },
+
   'timer:expired': (s, {handleChoice, timer, expireRound}, d) => {
     expireRound()
     timer.delay({
@@ -18,18 +19,18 @@ export default {
 
   'auth:change': (
     s,
-    {setAuth, persistTo, firebase, store, getToken},
-    {user, error, state}
+    {setAuth, persistTo, firebase, store, getToken, getRankings},
+    {payload, error, state}
   ) => {
     const addState = data =>
       Immutable.set(data, 'state', gameStates.INITIALIZED)
 
-    const handleData = () => {
-      setAuth({isLoading: false, user})
+    const handleData = async () => {
+      setAuth({isLoading: false, ...payload})
       persistTo({type: 'firebase'})
-      firebase.get({resource: 'game', uid: user.uid, decorate: addState})
+      firebase.get({resource: 'game', uid: payload.user.uid, decorate: addState})
+      getRankings(payload.idToken)
       store.remove()
-      getToken()
     }
 
     switch (state) {
