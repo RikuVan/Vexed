@@ -8,6 +8,6 @@
 
 @mixin text-base() {
   color: $color-text;
-  font-family: 'Lato', sans-serif;
+  font-family: $font-normal;
   font-size: 16px;
 }

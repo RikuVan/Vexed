@@ -1,0 +1,57 @@
+.cmd {
+  &-view {
+    @include flex(column, wrap, center, center);
+    margin: 2em 15% 0;
+    font-size: 18px;
+
+    h3 {
+      font-family: $font-normal;
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    h3, p, ul {
+      margin: 1em;
+    }
+
+    li {
+      padding-bottom: 5px;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  &-editor-wrapper {
+    @include flex(row, wrap, center, center);
+    margin-top: 20px;
+  }
+
+  &-editor {
+    flex: 1 0;
+    padding: 0.6em;
+    border-radius: 3px;
+    margin-right: 7px;
+    outline: none;
+    border: 1px solid #ddd;
+    font-size: inherit;
+    background: $color-primary;
+    color: white;
+  }
+
+  &-result {
+    padding-top: 1em;
+    font-size: 20px;
+  }
+
+  &-result.error {
+    color: red;
+  }
+
+  &-result.success {
+    color: green;
+  }
+}
+

@@ -48,7 +48,6 @@ export default {
     correct: [],
     flagsPlayed: 0,
     level: levels.EASY,
-    rating: 0,
     totalTime: 0,
     consecutiveCorrect: 0,
     playerName: ''
@@ -62,5 +61,10 @@ export default {
   rankings: Immutable({
     isLoading: false,
     players: []
+  }),
+  command: Immutable({
+    value: '',
+    error: null,
+    executed: null
   })
 }

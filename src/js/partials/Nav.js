@@ -5,13 +5,16 @@ import {getName, getTotalTimeFromSeconds} from '../helpers/utils'
 const LogInOutBtn = ({s, a}) => {
   if (s.auth.isLoading) {
     return <Loading small />
-  } else if (!s.auth.user) {
+  }
+
+  if (!s.auth.user) {
     return (
       <button className='Button Button-white block' onclick={a.login}>
         <i className='fa fa-sign-in' /> Sign in with Google
       </button>
     )
   }
+
   return (
     <button
       className='Button Button-white block destructive'

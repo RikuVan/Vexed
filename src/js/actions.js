@@ -6,7 +6,7 @@ import {
   checkForMessage,
 } from './helpers/utils'
 import {getImageUrl, fetchRankings} from './helpers/firebase'
-import {gameStates} from './state'
+import state, {gameStates} from './state'
 
 const gameActions = {
   initializeRound: ({countries, game}, actions, d) => update => {
@@ -50,7 +50,8 @@ const gameActions = {
       flagsPlayed: inc(game.flagsPlayed),
       correct,
       consecutiveCorrect,
-      totalTime
+      totalTime,
+      level: game.level,
     }
 
     if (auth.user !== null) {
@@ -71,7 +72,7 @@ const gameActions = {
     if (message) {
       actions.timer.delay({
         name: 'accomplishment_message',
-        delay: 1000,
+        ms: 1000,
         action: () => actions.Messenger.dispatch(message),
       })
     }
@@ -84,6 +85,8 @@ const gameActions = {
   changeLevel: (s, a, {level}) => ({
     game: Immutable.set(s.game, 'level', level),
   }),
+
+  resetGame: () => ({game: state.game}),
 }
 
 export default {
@@ -125,6 +128,51 @@ export default {
         setIsLoading({rankings: false})
         console.log('Not authorized to load rankings') // eslint-disable-line no-console
       })
+  },
+
+  updateCmd: ({command}, a, data) => ({
+    command: Immutable.merge(command, data),
+  }),
+
+  execCmd: (s, a) => {
+    const [cmd, name] = s.command.value
+      .toLowerCase()
+      .replace(/\s/g, '')
+      .split(':')
+    let error
+    if (
+      name !== s.game.playerName.replace(/\s/g, '').toLowerCase() &&
+      name !== s.auth.user.displayName.replace(/\s/g, '').toLowerCase()
+    ) {
+      error = 'Incorrect player name'
+    }
+    if (!['reset', 'delete'].includes(cmd)) {
+      error = 'Unknown command'
+    }
+    if (error) {
+      a.updateCmd({error, value: ''})
+      a.timer.delay({
+        name: 'cmd',
+        ms: 4000,
+        action: () =>
+          a.updateCmd({error: null}),
+      })
+      return
+    }
+    if (cmd === 'reset') {
+      a.updateGame(state.game)
+      a.updateCmd({executed: true, value: ''})
+      a.timer.delay({
+        name: 'cmd',
+        ms: 3000,
+        action: () => {
+          a.updateCmd({executed: false})
+          a.router.go('/')
+        }
+      })
+    } else if (cmd === 'delete') {
+      // console.log('delete')
+    }
   },
 
   ...gameActions,

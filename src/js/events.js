@@ -11,7 +11,7 @@ export default {
   'timer:expired': (s, {handleChoice, timer, expireRound}, d) => {
     expireRound()
     timer.delay({
-      seconds: 2000,
+      ms: 2000,
       name: 'round-over',
       action: () => handleChoice({answer: ''}),
     })
@@ -19,17 +19,17 @@ export default {
 
   'auth:change': (
     s,
-    {setAuth, persistTo, firebase, store, getToken, getRankings},
+    {setAuth, persistTo, firebase, store, getRankings},
     {payload, error, state}
   ) => {
     const addState = data =>
       Immutable.set(data, 'state', gameStates.INITIALIZED)
 
-    const handleData = async () => {
-      setAuth({isLoading: false, ...payload})
+    const handleData = data => {
+      setAuth({isLoading: false, ...data})
       persistTo({type: 'firebase'})
-      firebase.get({resource: 'game', uid: payload.user.uid, decorate: addState})
       getRankings(payload.idToken)
+      firebase.get({resource: 'game', uid: data.user.uid, decorate: addState})
       store.remove()
     }
 
@@ -37,7 +37,7 @@ export default {
       case 'attemptLogin':
         return setAuth({isLoading: true})
       case 'loggedIn':
-        return handleData()
+        return handleData(payload)
       case 'loginFailed':
         return setAuth({error})
       case 'logoutFailed':

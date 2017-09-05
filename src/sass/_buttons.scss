@@ -34,8 +34,8 @@
     }
   }
 
-  &-rankings {
-    margin-top: 2em;
+  &-rankings,
+  &-destructive {
     font-weight: 500;
     color: $color-primary;
     border-color: $color-primary;
@@ -45,6 +45,10 @@
       color: $color-background;
       border-color: $color-background;
     }
+  }
+
+  &-rankings {
+    margin-top: 2em;
   }
 }
 
