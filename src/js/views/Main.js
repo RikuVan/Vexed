@@ -61,7 +61,7 @@ const Main = ({s, a, FlashMessage}) => {
           <View s={s} a={a} />
 
           <div className='reset-link'>
-            {s.auth.user && (
+            {s.auth.user && !isRankingsView && (
               <Link to={isResetView ? '/' : 'reset'} go={a.router.go}>
                 <button className='Button Button-rankings'>
                   {isResetView ? 'Back to game' : 'Reset game or delete account'}

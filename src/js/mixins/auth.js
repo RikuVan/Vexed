@@ -10,7 +10,7 @@ export default () => emit => ({
       auth.onAuthStateChanged(async user => {
         if (user) {
           const userData = pickUserData(user)
-          const idToken = await auth.currentUser.getIdToken(false)
+          const idToken = await auth.currentUser.getIdToken(true)
           emit('auth:change', {state: 'loggedIn', payload: {user: userData, idToken}})
         }
       })

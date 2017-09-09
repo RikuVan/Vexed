@@ -17,12 +17,12 @@
     "deploy": "yarn install && yarn run build && firebase deploy"
   },
   "dependencies": {
-    "@hyperapp/router": "^0.2.3",
+    "@hyperapp/router": "0.2.3",
     "classnames": "^2.2.5",
     "d3": "^4.10.0",
     "firebase": "^4.2.0",
-    "hyperapp": "^0.12.0",
-    "hyperapp-partial": "^0.4.1",
+    "hyperapp": "^0.12.1",
+    "hyperapp-partial": "^0.5.0",
     "ramda": "^0.24.1",
     "seamless-immutable": "^7.1.2",
     "topojson": "^3.0.0",

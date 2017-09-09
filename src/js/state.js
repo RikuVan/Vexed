@@ -65,6 +65,7 @@ export default {
   command: Immutable({
     value: '',
     error: null,
-    executed: null
+    executed: null,
+    isLoading: false
   })
 }

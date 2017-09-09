@@ -5,8 +5,7 @@ const api = {
   players: () => db.ref('V0/players'),
   player: ({uid}) => db.ref(`V0/players/${uid}`),
   game: ({uid}) => db.ref(`V0/players/${uid}/game`),
-  playerName: ({uid}) => db.ref(`V0/players/${uid}/game/playerName`),
-  leaders: () => db.ref(`V0/leaders`)
+  playerName: ({uid}) => db.ref(`V0/players/${uid}/game/playerName`)
 }
 
 const cb = snapshot => snapshot.val()
@@ -19,10 +18,11 @@ const dbFn = operation => async ({resource, uid, payload}) => {
     return null
   }
 
-  if (operation !== 'remove') {
-    query = payload ? [payload] : ['value', cb]
-  }
   const dbRef = api[resource]({uid})
+
+  if (operation === 'remove') return dbRef.remove()
+
+  query = payload ? [payload] : ['value', cb]
 
   try {
     return await dbRef[operation](...query)

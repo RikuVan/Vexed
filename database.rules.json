@@ -2,6 +2,8 @@
   "rules": {
     "V0": {
       "players": {
+          ".read": "auth !== null && auth.provider === 'google'",
+          ".write": false,
         "$uid": {
           ".read": "auth !== null && auth.provider === 'google' && $uid === auth.uid",
           "game": {

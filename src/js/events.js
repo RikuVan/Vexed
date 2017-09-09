@@ -8,6 +8,8 @@ export default {
     root.removeChild(loader)
   },
 
+  'route': (s, {resetRound}) => { resetRound() },
+
   'timer:expired': (s, {handleChoice, timer, expireRound}, d) => {
     expireRound()
     timer.delay({
@@ -37,7 +39,7 @@ export default {
       case 'attemptLogin':
         return setAuth({isLoading: true})
       case 'loggedIn':
-        return handleData(payload)
+        return payload ? handleData(payload) : null
       case 'loginFailed':
         return setAuth({error})
       case 'logoutFailed':
