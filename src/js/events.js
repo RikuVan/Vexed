@@ -8,7 +8,7 @@ export default {
     root.removeChild(loader)
   },
 
-  'route': (s, {resetRound}) => { resetRound() },
+  'route': (s, {reset}) => { reset(['round']) },
 
   'timer:expired': (s, {handleChoice, timer, expireRound}, d) => {
     expireRound()

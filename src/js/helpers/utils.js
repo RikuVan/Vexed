@@ -150,4 +150,4 @@ export const getChoices = (countries, selected = [], level = 'easy') => {
   return {choices, correctAnswer: getCorrectAnswer(choices)}
 }
 
-export {Immutable, pathOr, memoize, toPairs, reduce, compose}
+export {Immutable, pathOr, memoize, toPairs, reduce, compose, pick}

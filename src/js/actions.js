@@ -4,9 +4,10 @@ import {
   getChoices,
   inc,
   checkForMessage,
+  pick
 } from './helpers/utils'
 import {getImageUrl, fetchRankings, deleteUser} from './helpers/firebase'
-import state, { gameStates, storageTypes } from './state'
+import state, {gameStates, storageTypes, levels} from './state'
 
 const gameActions = {
   initializeRound: ({countries, game}, actions) => {
@@ -22,7 +23,7 @@ const gameActions = {
       elapsedTime: null,
       isLoading: true,
       error: null,
-      expired: null,
+      expired: null
     })
 
     if (game.status !== gameStates.IN_PROGRESS) {
@@ -52,14 +53,14 @@ const gameActions = {
       correct,
       consecutiveCorrect,
       totalTime,
-      level: game.level,
+      level: game.level
     }
 
     if (auth.user !== null) {
       await actions.firebase.update({
         resource: 'game',
         uid: auth.user.uid,
-        payload,
+        payload
       })
     } else {
       actions.store.save()
@@ -74,22 +75,26 @@ const gameActions = {
       actions.timer.delay({
         name: 'accomplishment_message',
         ms: 1000,
-        action: () => actions.Messenger.dispatch(message),
+        action: () => actions.Messenger.dispatch(message)
       })
     }
   },
 
   expireRound: ({round}) => ({
-    round: Immutable.set(round, 'expired', true),
+    round: Immutable.set(round, 'expired', true)
   }),
 
   changeLevel: (s, a, {level}) => ({
-    game: Immutable.set(s.game, 'level', level),
+    game: Immutable.set(s.game, 'level', level)
   }),
 
-  resetGame: s => ({game: state.game}),
-
-  resetRound: s => ({round: state.round})
+  reset: (s, a, d) => {
+    if (d) {
+      const stateToReset = pick(d, state)
+      return {...stateToReset}
+    }
+    return {...state}
+  }
 }
 
 export default {
@@ -104,14 +109,14 @@ export default {
   closeEditor: ({editors}, a, {type}) => ({editors: {[type]: false}}),
 
   updateName: ({game}, a, {name}) => ({
-    game: Immutable.set(game, 'playerName', name),
+    game: Immutable.set(game, 'playerName', name)
   }),
 
   saveName: async ({auth, game}, {firebase, closeEditor}) => {
     await firebase.update({
       resource: 'game',
       uid: auth.user.uid,
-      payload: {playerName: game.playerName},
+      payload: {playerName: game.playerName}
     })
     closeEditor({type: 'name'})
   },
@@ -123,8 +128,8 @@ export default {
         update({
           rankings: Immutable.merge(rankings, {
             players: data || [],
-            isLoading: false,
-          }),
+            isLoading: false
+          })
         })
       })
       .catch(error => {
@@ -136,10 +141,7 @@ export default {
   deleteUser: ({auth}, a, token) => {
     deleteUser(auth.idToken)
       .then(() => {
-        a.deleteUser()
-        a.store.remove()
-        a.resetGame()
-        a.resetRound()
+        a.reset()
         a.persistTo(storageTypes.LOCAL)
       })
       .catch(error => {
@@ -148,11 +150,11 @@ export default {
   },
 
   updateCmd: ({command}, a, data) => ({
-    command: Immutable.merge(command, data),
+    command: Immutable.merge(command, data)
   }),
 
   // reset game or delete user
-  execCmd: (s, a) => {
+  execCmd: async (s, a) => {
     const [cmd, name] = s.command.value
       .toLowerCase()
       .replace(/\s/g, '')
@@ -174,14 +176,27 @@ export default {
       a.timer.delay({
         name: 'cmd',
         ms: 4000,
-        action: () =>
-          a.updateCmd({error: null}),
+        action: () => a.updateCmd({error: null})
       })
       return
     }
     if (cmd === 'reset') {
-      a.resetGame()
-      a.resetRound()
+      a.reset(['game', 'round'])
+      if (s.auth.user !== null) {
+        await a.firebase.update({
+          resource: 'game',
+          uid: s.auth.user.uid,
+          payload: {
+            flagsPlayed: 0,
+            correct: [],
+            consecutiveCorrect: 0,
+            totalTime: 0,
+            level: levels.EASY
+          }
+        })
+      } else {
+        a.store.save()
+      }
       a.updateCmd({executed: true, value: ''})
 
       a.timer.delay({
@@ -189,7 +204,6 @@ export default {
         ms: 3000,
         action: () => {
           a.updateCmd({executed: false})
-          a.logout()
           a.router.go('/')
         }
       })
@@ -209,5 +223,5 @@ export default {
     }
   },
 
-  ...gameActions,
+  ...gameActions
 }
