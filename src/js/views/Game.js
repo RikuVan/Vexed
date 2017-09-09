@@ -15,7 +15,7 @@ const GameView = ({s, a}) => (
 
     {!s.auth.user && s.game.state === gameStates.UNINITIALIZED &&
       <aside className='intro'>
-        <h3>Intro</h3>
+        <h3>Getting started</h3>
         <p>There are 252 country flags to recognize.</p>
         <p>Time is limited. Choose your level below.</p>
         <p>That's it. Play and learn.</p>

@@ -80,3 +80,24 @@
   background: $color-background;
 }
 
+@media (max-width: 760px) {
+  .Nav {
+    @include flex(column, wrap, flex-start, center);
+  }
+
+  .user-info__detail-number {
+    padding-left: .2em;
+  }
+
+  .user-info {
+    flex-direction: column;
+  }
+
+  .user-info__detail, .user-info {
+    margin-bottom: 30px;
+  }
+
+  .user-info {
+    margin-top: 15px;
+  }
+}
