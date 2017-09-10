@@ -1,6 +1,6 @@
 import 'whatwg-fetch'
 import {app} from 'hyperapp'
-import {Router} from '@hyperapp/router'
+import {router} from '@hyperapp/router'
 import partials from 'hyperapp-partial'
 import state from './state'
 import actions from './actions'
@@ -26,7 +26,7 @@ app({
   actions,
   events,
   mixins: [
-    Router,
+    router(),
     auth(),
     timer(),
     firebaseDb(),

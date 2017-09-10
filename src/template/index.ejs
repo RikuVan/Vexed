@@ -61,7 +61,8 @@
   <noscript>Enable JavaScript</noscript>
   <script>
     (() => {
-      if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+      var dev = () => window.location.host.startsWith('localhost')
+      if ('serviceWorker' in navigator && !dev) navigator.serviceWorker.register('/sw.js')
     })()
   </script>
 </body>

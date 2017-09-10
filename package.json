@@ -17,7 +17,7 @@
     "deploy": "yarn install && yarn run build && firebase deploy"
   },
   "dependencies": {
-    "@hyperapp/router": "0.2.3",
+    "@hyperapp/router": "^0.3.0",
     "classnames": "^2.2.5",
     "d3": "^4.10.0",
     "firebase": "^4.2.0",
