@@ -1,4 +1,3 @@
-import {Immutable} from './helpers/utils'
 import {gameStates} from './state'
 
 export default {
@@ -25,7 +24,7 @@ export default {
     {payload, error, state}
   ) => {
     const addState = data =>
-      Immutable.set(data, 'state', gameStates.INITIALIZED)
+      Object.assign({}, data, {state: gameStates.INITIALIZED})
 
     const handleData = data => {
       setAuth({isLoading: false, ...data})

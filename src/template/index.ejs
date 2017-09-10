@@ -59,5 +59,10 @@
     <div id="app-loader" class="loader"></div>
   </div>
   <noscript>Enable JavaScript</noscript>
+  <script>
+    (() => {
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+    })()
+  </script>
 </body>
 </html>

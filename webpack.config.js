@@ -5,12 +5,15 @@ const historyApiFallback = require('connect-history-api-fallback')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
 const filterFalsy = arr => arr.filter(e => e)
 const ROOT_PATH = path.resolve(__dirname)
 
 console.log('Building for:', process.env.NODE_ENV)
+
+const PUBLIC_PATH = 'https://www.vexed.fun/'
 
 const extractSass = new ExtractTextPlugin({
   filename: 'vexed.css'
@@ -75,6 +78,14 @@ const createPlugins = () =>
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
+
+    PRODUCTION &&
+      new SWPrecacheWebpackPlugin({
+        cacheId: 'vexed/V0',
+        filename: 'sw.js',
+        minify: true,
+        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      })
   ])
 
 const getCssLoader = () =>

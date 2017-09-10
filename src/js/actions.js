@@ -67,6 +67,7 @@ const gameActions = {
     }
 
     actions.updateRound({isCorrect, active: false, expired: round.expired})
+
     actions.updateGame(payload)
 
     const message = checkForMessage(correct.length, consecutiveCorrect)
@@ -102,11 +103,11 @@ export default {
   setIsLoading: (state, a, data) => updateIsLoading(data, state),
 
   // set if localStorage fallback or firebase db
-  persistTo: (s, a, {type}) => ({persistence: {type}}),
+  persistTo: ({persistence}, a, {type}) => ({persistence: Immutable.set(persistence, 'type', type)}),
 
-  openEditor: ({editors}, a, {type}) => ({editors: {[type]: true}}),
+  openEditor: ({editors}, a, {type}) => ({editors: Immutable.set(editors, type, true)}),
 
-  closeEditor: ({editors}, a, {type}) => ({editors: {[type]: false}}),
+  closeEditor: ({editors}, a, {type}) => ({editors: Immutable.set(editors, type, false)}),
 
   updateName: ({game}, a, {name}) => ({
     game: Immutable.set(game, 'playerName', name)

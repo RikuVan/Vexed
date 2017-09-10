@@ -35,7 +35,7 @@ export const updateIsLoading = (loading, state) => {
 
 export const getName = converge(
   (displayName, playerName) =>
-    playerName.trim().length > 0 ? playerName : displayName,
+    playerName && playerName.length > 0 ? playerName : displayName,
   [
     pathOr('', ['auth', 'user', 'displayName']),
     pathOr('', ['game', 'playerName']),
