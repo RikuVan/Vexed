@@ -23,7 +23,8 @@ const gameActions = {
       elapsedTime: null,
       isLoading: true,
       error: null,
-      expired: null
+      expired: null,
+      selected: null
     })
 
     if (game.status !== gameStates.IN_PROGRESS) {
@@ -66,7 +67,7 @@ const gameActions = {
       actions.store.save()
     }
 
-    actions.updateRound({isCorrect, active: false, expired: round.expired})
+    actions.updateRound({isCorrect, active: false, expired: round.expired, selected: choice})
 
     actions.updateGame(payload)
 

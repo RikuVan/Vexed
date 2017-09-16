@@ -17,3 +17,17 @@
   animation-name: fadeIn;
 }
 
+@keyframes pulse {
+  0% {
+    color: lighten($color-primary, 10%);
+  }
+  30% {
+    color: lighten($color-primary, 30%);
+  }
+  70% {
+    color: lighten($color-primary, 70%);
+  }
+  100% {
+    font-weight: bold;
+  }
+}

@@ -1,13 +1,15 @@
 import {h} from 'hyperapp'
 import cx from 'classnames'
 
-const Choices = ({choices, selected, handleChoice, active, loading}) => {
+const Choices = ({choices, answer, isCorrect, selected, handleChoice, active, loading}) => {
   if (loading) return null
+
   return (
     <div className={cx('Choices-wrapper', {inactive: !choices})}>
       {choices.map((country, key) => {
         const code = Object.keys(country)[0]
         const isCurrent = selected === code
+
         return (
           <div key={key}>
             <div>
@@ -15,8 +17,10 @@ const Choices = ({choices, selected, handleChoice, active, loading}) => {
                 className={cx(
                   'Choice',
                   {
-                    'Choice--selected': isCurrent,
-                    'disabled': !active
+                    'Choice--selected-correct': isCurrent && isCorrect,
+                    'Choice--selected-incorrect': isCurrent && !isCorrect,
+                    'disabled': !active,
+                    'Choice--highlight': !active && code === answer && !isCorrect,
                   })
                 }
               >

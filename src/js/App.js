@@ -32,7 +32,7 @@ app({
     firebaseDb(),
     store({key: 'game', updateAction: 'updateGame'}),
     partials,
-    messenger(messages.list),
+    messenger(messages.list)
   ],
   root: document.getElementById('app')
 })

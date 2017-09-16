@@ -26,8 +26,10 @@ const GameView = ({s, a}) => (
     <div className='options'>
       <Choices
         choices={s.round.choices}
+        answer={s.round.answer}
+        isCorrect={s.round.isCorrect}
         handleChoice={a.handleChoice}
-        selected={s.round.select}
+        selected={s.round.selected}
         active={s.round.active}
         loading={s.round.isLoading}
       />

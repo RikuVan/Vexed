@@ -23,14 +23,25 @@
 
   &:active,
   &:hover,
-  &--selected {
-    background: darken($color-choice, 10%);
-  }
 
   &.disabled {
     background: lighten($color-choice, 10%);
     opacity: 0.7;
     cursor: not-allowed;
+  }
+
+  &--selected-correct.disabled {
+    background: darken($color-choice, 10%);
+  }
+
+  &--selected-incorrect.disabled {
+    background: darken($color-choice, 10%);
+    color: $color-error;
+  }
+
+  &--highlight.disabled {
+    background: darken($color-choice, 10%);
+    animation: pulse 1.5s infinite;
   }
 }
 

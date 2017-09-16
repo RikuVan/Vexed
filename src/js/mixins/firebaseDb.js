@@ -8,6 +8,7 @@ const api = {
   playerName: ({uid}) => db.ref(`V0/players/${uid}/game/playerName`)
 }
 
+
 const cb = snapshot => snapshot.val()
 
 const dbFn = operation => async ({resource, uid, payload}) => {
